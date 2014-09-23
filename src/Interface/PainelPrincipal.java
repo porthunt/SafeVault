@@ -1,5 +1,6 @@
 package Interface;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -8,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -21,6 +24,8 @@ public class PainelPrincipal extends JPanel {
 	public final int COORD_Y=110;
 	private BufferedImage i;
 	TratadorBotoes tb;
+	JTextField login;
+	JLabel aviso;
 
 	public PainelPrincipal() {
 		
@@ -38,7 +43,7 @@ public class PainelPrincipal extends JPanel {
 		
 		Font font = new Font("Helvetica", Font.BOLD,18);
 		
-		JTextField login = new JTextField();
+		login = new JTextField();
 		login.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		login.setFont(font);
 		login.setHorizontalAlignment(SwingConstants.CENTER);
@@ -46,11 +51,18 @@ public class PainelPrincipal extends JPanel {
 		login.setVisible(true);
 		this.add(login);
 		
+		JButton cadastrar = new JButton();
+		cadastrar.setBounds(20, 20, 20, 20);
+		cadastrar.setVisible(true);
+		cadastrar.setName("Cadastrar");
+		cadastrar.addMouseListener(tb);
+		this.add(cadastrar);
+		
 		ConnectButton connect = new ConnectButton();
 		connect.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		connect.setBounds(290, 364, 94, 42);
 		connect.setVisible(true);
-		connect.setName("Cadastrar");
+		connect.setName("Conectar");
 		connect.addMouseListener(tb);
 		this.add(connect);
 		
@@ -61,7 +73,14 @@ public class PainelPrincipal extends JPanel {
 		close.setName("Fechar");
 		close.addMouseListener(tb);
 		this.add(close);
-
+		
+		aviso = new JLabel();
+		aviso.setBounds(0, 375, LARG_DEFAULT, 100);
+		aviso.setHorizontalAlignment(SwingConstants.CENTER);
+		aviso.setFont(new Font("Helvetica", Font.PLAIN,13));
+		aviso.setForeground(Color.RED);
+		aviso.setVisible(true);
+		this.add(aviso);
 
 		this.setLayout(null);
 		Dimension size = new Dimension(i.getWidth(null), i.getHeight(null));
@@ -70,10 +89,14 @@ public class PainelPrincipal extends JPanel {
 		setMaximumSize(size);
 		setSize(size);
 
-		//		textField_1 = new JTextField();
-		//		textField_1.setBounds(315, 292, 134, 28);
-		//		add(textField_1);
-		//		textField_1.setColumns(10);
+	}
+
+	public JTextField getLogin() {
+		return login;
+	}
+
+	public JLabel getAviso() {
+		return aviso;
 	}
 
 	protected void paintComponent(Graphics g) {

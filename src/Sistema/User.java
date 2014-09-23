@@ -63,6 +63,18 @@ public class User {
 
 	}
 	
+	public boolean buscarUser(String login) throws Exception {
+		try {
+			UserDAO cDAO = new UserDAO();
+			Boolean bool = cDAO.buscaUser(login);
+			return bool;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception("ID já existente. " + e);
+		}
+
+	}
+	
 	public boolean testaSenha(String senha, String confirmasenha) {
 		if (!senha.equals(confirmasenha))
 			return false;

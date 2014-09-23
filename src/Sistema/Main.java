@@ -3,8 +3,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.Connection;
 
-import javax.swing.ImageIcon;
-
+import DAOs.LogDAO;
+import DAOs.TriesDAO;
 import DAOs.UserDAO;
 import Interface.FramePrincipal;
 
@@ -23,7 +23,12 @@ public class Main {
 		FramePrincipal frameprincipal = FramePrincipal.getInstance();
 		
 		try {
+			TriesDAO tdao = new TriesDAO();
+			tdao.removeTentativas();
 			UserDAO cdao = new UserDAO();
+			LogDAO ldao = new LogDAO();
+			Log log = new Log();
+			log.cadastraLog(1001, null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

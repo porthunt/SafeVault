@@ -6,8 +6,11 @@ import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import DAOs.TriesDAO;
 import Interface.FramePrincipal;
 import Interface.PainelCadastro;
+import Interface.PainelPrincipal;
+import Sistema.Log;
 import Sistema.User;
 
 public class TratadorBotoes implements MouseListener {
@@ -22,8 +25,43 @@ public class TratadorBotoes implements MouseListener {
 			fp.cadastraPanel();
 		}
 		
+		if (arg0.getComponent().getName().equals("Conectar"))
+		{
+			PainelPrincipal pp = (PainelPrincipal) arg0.getComponent().getParent();
+			String login = pp.getLogin().getText();
+			
+			try {
+				User user = new User();
+				if(user.buscarUser(login)) {
+					JOptionPane.showMessageDialog(frame, "Encontrado!", "", JOptionPane.PLAIN_MESSAGE);
+				} else {
+					TriesDAO tDAO = new TriesDAO();
+					tDAO.insereTentativa(login);
+					int tentativas = tDAO.buscaTentativa(login);
+					if (tentativas == 2) {
+						pp.getAviso().setText("Usuário inválido. Você possui mais 1 tentativa.");
+					} else if (tentativas>0 && tentativas<2) {
+						pp.getAviso().setText("Usuário inválido. Você possui mais "+(3-tentativas)+" tentativas.");
+					} else {
+						pp.getAviso().setText("Programa bloqueado.");
+					}
+					pp.repaint();
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		if (arg0.getComponent().getName().equals("Fechar"))
 		{
+			Log log = new Log();
+			try {
+				log.cadastraLog(1002, null);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.exit(0);
 		}
 		

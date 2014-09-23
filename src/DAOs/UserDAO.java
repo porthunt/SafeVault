@@ -80,48 +80,41 @@ public class UserDAO {
         ConectaBD.closeConnection(con, ps);
     }
 	
-	/*public User buscaPessoa (String nome) throws Exception
+	public boolean buscaUser (String username) throws Exception
     {
         PreparedStatement ps = null;
         Connection con = null;
         ResultSet rs = null;
-        User c = new User();
         
         try
         {
-        	String busca = "SELECT * FROM cliente WHERE nome LIKE '%' || ? || '%';";
+        	String busca = "SELECT login FROM user WHERE login=?";
         	
             connect();
             con = this.con;
             ps = con.prepareStatement(busca);
-            ps.setString(1, nome);
+            ps.setString(1, username);
             rs = ps.executeQuery();
             
             if (!rs.next()){
-                return null;
+                return false;
             }
             
-            c.setId(rs.getInt("id"));
-            c.setNome(rs.getString("nome"));
-            c.setDatanascimento(rs.getString("datanascimento"));
-            c.setEmail(rs.getString("email"));
-            c.setSexo(rs.getString("sexo"));
-            c.setEndereco(rs.getString("endereco"));
-            c.setCpf(rs.getString("cpf"));
-            c.setTelefone(rs.getString("telefone"));
-            c.setCelular(rs.getString("celular"));
-            c.setBairro(rs.getString("bairro"));
-            c.setDiabetico(rs.getString("diabetico"));
-            c.setObservacoes(rs.getString("observacoes"));
+            ConectaBD.closeConnection(con, ps);
+            return true;
+            
+            
+//            else {
+//            	return true;
+//            }
      
         }
         catch(SQLException sqle)
         {
-            throw new Exception("Erro ao inserir." + sqle);
+            throw new Exception("Erro ao buscar usuário." + sqle);
         }
        
-        ConectaBD.closeConnection(con, ps);
-        return c;
-    }*/
+        
+    }
 	
 }
