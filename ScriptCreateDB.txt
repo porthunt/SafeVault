@@ -1,0 +1,1 @@
+CREATE TABLE user (nome varchar[100], login char[10] PRIMARY KEY, senha char[164], grupo char[10]); CREATE TABLE log (id INTEGER PRIMARY KEY, significado TEXT, data DATE, user char[10], FOREIGN KEY(user) REFERENCES user(id)); CREATE TABLE randomNumbers (id char[10] PRIMARY KEY, number char[15], FOREIGN KEY(id) REFERENCES user(id));
