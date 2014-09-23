@@ -22,6 +22,11 @@ public class TratadorBotoes implements MouseListener {
 			fp.cadastraPanel();
 		}
 		
+		if (arg0.getComponent().getName().equals("Fechar"))
+		{
+			System.exit(0);
+		}
+		
 		else if (arg0.getComponent().getName().equals("Confirmar"))
 		{	
 			PainelCadastro pc = (PainelCadastro) arg0.getComponent().getParent();

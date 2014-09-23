@@ -42,17 +42,25 @@ public class PainelPrincipal extends JPanel {
 		login.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		login.setFont(font);
 		login.setHorizontalAlignment(SwingConstants.CENTER);
-		login.setBounds(316, 255, 145, 22);
+		login.setBounds(205, 320, 265, 22);
 		login.setVisible(true);
 		this.add(login);
 		
-		LockButton locker = new LockButton();
-		locker.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		locker.setBounds(316, 410, 60, 60);
-		locker.setVisible(true);
-		locker.setName("Cadastrar");
-		locker.addMouseListener(tb);
-		this.add(locker);
+		ConnectButton connect = new ConnectButton();
+		connect.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		connect.setBounds(290, 364, 94, 42);
+		connect.setVisible(true);
+		connect.setName("Cadastrar");
+		connect.addMouseListener(tb);
+		this.add(connect);
+		
+		CloseButton close = new CloseButton();
+		close.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		close.setBounds(314, 447, 45, 45);
+		close.setVisible(true);
+		close.setName("Fechar");
+		close.addMouseListener(tb);
+		this.add(close);
 
 
 		this.setLayout(null);
