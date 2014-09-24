@@ -25,7 +25,7 @@ public class TratadorBotoes implements MouseListener {
 			fp.cadastraPanel();
 		}
 		
-		if (arg0.getComponent().getName().equals("Conectar"))
+		else if (arg0.getComponent().getName().equals("Conectar"))
 		{
 			PainelPrincipal pp = (PainelPrincipal) arg0.getComponent().getParent();
 			String login = pp.getLogin().getText();
@@ -53,7 +53,7 @@ public class TratadorBotoes implements MouseListener {
 			}
 		}
 		
-		if (arg0.getComponent().getName().equals("Fechar"))
+		else if (arg0.getComponent().getName().equals("Fechar"))
 		{
 			Log log = new Log();
 			try {
@@ -74,7 +74,7 @@ public class TratadorBotoes implements MouseListener {
 					&& !pc.getTextlogin().getText().equals("")
 					&& !pc.getTextsenha().getText().equals("")
 					&& !pc.getTextconfirmasenha().getText().equals("")
-					&& !pc.getTextgrupo().getSelectedItem().equals("")
+					&& !pc.getTextgrupo().getText().equals("")
 					&& !pc.getTextcaminhochave().getText().equals(""))
 			{
 				if (user.testaSenha(pc.getTextsenha().getText(), pc.getTextconfirmasenha().getText())) {
@@ -82,7 +82,7 @@ public class TratadorBotoes implements MouseListener {
 					String login = pc.getTextlogin().getText();
 					String senha = pc.getTextsenha().getText();
 					String confirmasenha = pc.getTextconfirmasenha().getText();
-					String grupo = (String) pc.getTextgrupo().getSelectedItem();
+					String grupo = (String) pc.getTextgrupo().getText();
 					String caminhochave = pc.getTextcaminhochave().getText();
 
 					//pc.bordaNormal();
@@ -129,7 +129,7 @@ public class TratadorBotoes implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
+		
+		
 	}
 }
