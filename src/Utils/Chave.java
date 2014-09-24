@@ -11,9 +11,10 @@ import java.security.spec.EncodedKeySpec;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Random;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
-import javax.swing.JOptionPane;
 
 public class Chave {
 	
@@ -71,4 +72,52 @@ public class Chave {
 		
 	}
 
+	//ESTE MÉTODO ESTÁ COMENTADO, POIS ESTAVA UTILIZANDO UM CONTAINER PARA ENTRADA DE DADOS.
+	//ESTÁ FUNCIONANDO, BASTA ADAPTAR A ENTRADA DOS DADOS
+	//ESTE MÉTODO SERÁ UTILIZADO NO TECEIRO PASSO DE LOGIN DO USUÁRIO, ONDE SE A CHAVE PRIVADA É DECRIPTADA.
+	//PARA DECRIPTAR A CHAVE PRIVADA, PRIMEIRO É SOLICITADO A FRASE SECRETA PARA A GERACAO DA CHAVE SIMÉTRICA QUE SERÁ UTILIZADA PARA DECRIPTAR.
+	//DEPOIS DISSO, UTILIZA-SE O MÉTODO generateRandomByteArray, QUE ESTÁ NESTA CLASSE AQUI.
+	//DEPOIS QUE ASSINAR ESTE ARRAY DE 512 BYTES COM A CHAVE PRIVADA, VERIFICA A ASSINATURA COM A CHAVE PUBLICA DO USUARIO QUE FOI PREVIAMENTE CADASTRADA.
+	//MARCO COMBAT 24/09/2014
+	
+		/*@SuppressWarnings("deprecation")
+		private boolean checkKey(File privateKeyFile) {
+			
+			try {
+
+
+				PrivateKey privateKey;
+			
+				privateKey = Chave.readPrivateKeyFromFile(privateKeyFile, phraseField.getText());
+				container.fraseSecreta = phraseField.getText();
+				container.kPrivFileName = privateKeyFile.getAbsolutePath();
+				byte[] publicKeyBytes = container.usuario.getChavePublica();
+				PublicKey publicKey = Chave.readPublicKeyFromBytes(publicKeyBytes);
+				
+				byte[] randomBytes = generateRandomByteArray();
+				
+				Signature sig = Signature.getInstance("MD5WithRSA");
+			    sig.initSign(privateKey);
+			    sig.update(randomBytes);
+			    byte[] signature = sig.sign();
+			    
+			    sig.initVerify(publicKey);
+			    sig.update(randomBytes);
+			    
+			    if(sig.verify(signature)) {
+					return true;
+			    }
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return false;
+		}*/
+		
+		public byte[] generateRandomByteArray() {
+			byte[] bytes = new byte[512];
+			Random r = new Random();
+			r.nextBytes(bytes);
+			return bytes;
+		}
 }
