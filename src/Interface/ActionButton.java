@@ -8,15 +8,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
-public class ConfirmaButton extends JButton {
+public class ActionButton extends JButton {
 	
 	private BufferedImage i;
 
-	public ConfirmaButton()
+	public ActionButton(String caminho)
 	{
 		try
 		{
-			i=ImageIO.read(new File("confirmar.png"));
+			i=ImageIO.read(new File(caminho));
 		}
 		catch(IOException e)
 		{

@@ -115,19 +115,18 @@ public class PainelCadastro extends JPanel {
 
 		//defaultBorder = textnome.getBorder();
 
-		JButton voltar = new JButton("Voltar");
+		ActionButton voltar = new ActionButton("voltar.png");
 		voltar.setName("Voltar");
-		voltar.setFocusable(false);
-		voltar.setBounds(126, 241, 150, 30);
+		voltar.setBounds(152, 418, 182, 56);
 		voltar.setVisible(true);
-		//this.add(voltar);
+		this.add(voltar);
 		voltar.addMouseListener(tt);
 
 		// Confirmar
 
-		ConfirmaButton confirmar = new ConfirmaButton();
+		ActionButton confirmar = new ActionButton("confirmar.png");
 		confirmar.setName("Confirmar");
-		confirmar.setBounds(243, 419, 182, 56);
+		confirmar.setBounds(376, 418, 182, 56);
 		confirmar.setVisible(true);
 		this.add(confirmar);
 		confirmar.addMouseListener(tt);

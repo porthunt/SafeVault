@@ -33,7 +33,7 @@ public class TratadorBotoes implements MouseListener {
 			try {
 				User user = new User();
 				if(user.buscarUser(login)) {
-					JOptionPane.showMessageDialog(frame, "Encontrado!", "", JOptionPane.PLAIN_MESSAGE);
+					fp.senhaPanel();
 				} else {
 					TriesDAO tDAO = new TriesDAO();
 					tDAO.insereTentativa(login);

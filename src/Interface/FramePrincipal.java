@@ -14,13 +14,14 @@ public class FramePrincipal extends JFrame {
 	
 	private PainelPrincipal pp;
 	private PainelCadastro pc;
+	private PainelSenha ps;
 	public User user;
+	String version = "0.1";
 	
 	private static final FramePrincipal INSTANCE = new FramePrincipal();
 	
 	private FramePrincipal() {
-		Version v = new Version();
-		this.setTitle("SafeVault v."+v.getVersion());
+		this.setTitle("SafeVault v"+version);
 		this.setBounds(0, 0, LARG_DEFAULT, ALT_DEFAULT);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -42,6 +43,8 @@ public class FramePrincipal extends JFrame {
 		
 		if (pp!=null)
 			this.remove(pp);
+		else if (ps!=null)
+			this.remove(ps);
 		
 		try {
 			pc = new PainelCadastro();
@@ -57,10 +60,24 @@ public class FramePrincipal extends JFrame {
 		
 		if (pc!=null)
 			this.remove(pc);
+		else if (ps!=null)
+			this.remove(ps);
 		
 		this.repaint();
 		this.add(pp);
 		
+	}
+	
+public void senhaPanel() {
+		
+		if (pc!=null)
+			this.remove(pc);
+		else if (pp!=null)
+			this.remove(pp);
+		
+		ps = new PainelSenha();
+		this.repaint();
+		this.add(ps);
 	}
 	
 }
