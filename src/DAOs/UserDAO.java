@@ -137,13 +137,47 @@ public class UserDAO {
                 return null;
             }
             
+            String num = rs.getString("number");
             ConectaBD.closeConnection(con, ps);
-            return rs.getString("number");
+            return num;
      
         }
         catch(SQLException sqle)
         {
             throw new Exception("Erro ao conferir senha." + sqle);
+        }
+       
+        
+    }
+	
+	public String buscaHashSenha (String username) throws Exception
+    {
+        PreparedStatement ps = null;
+        Connection con = null;
+        ResultSet rs = null;
+        
+        try
+        {
+        	String busca = "SELECT senha FROM user WHERE login=?";
+        	
+            connect();
+            con = this.con;
+            ps = con.prepareStatement(busca);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            
+            if (!rs.next() || username==null){
+                return null;
+            }
+            
+            String num = rs.getString("senha");
+            ConectaBD.closeConnection(con, ps);
+            return num;
+     
+        }
+        catch(SQLException sqle)
+        {
+            throw new Exception("Erro ao checar senha." + sqle);
         }
        
         

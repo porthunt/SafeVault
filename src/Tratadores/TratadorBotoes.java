@@ -30,7 +30,7 @@ public class TratadorBotoes implements MouseListener {
 		if (arg0.getComponent().getName().equals("ConfirmaSenha"))
 		{
 			PainelSenha pp = (PainelSenha) arg0.getComponent().getParent();
-			if (pp.testaIntegridadeSenha(fp.user.getSenha())) {
+			if (fp.user.testaIntegridadeSenha(fp.user.getSenha())) {
 				fp.cadastraPanel();
 			} else {
 				JOptionPane.showMessageDialog(frame, "Senha incorreta!", "", JOptionPane.OK_OPTION);
@@ -44,6 +44,7 @@ public class TratadorBotoes implements MouseListener {
 			
 			try {
 				if(user.buscarUser(login)) {
+					fp.user.setLogin(login);
 					fp.senhaPanel();
 				} else {
 					TriesDAO tDAO = new TriesDAO();
