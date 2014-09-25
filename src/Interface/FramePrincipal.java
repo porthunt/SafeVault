@@ -27,7 +27,6 @@ public class FramePrincipal extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);
-		
 		user = new User();
 		
 		pp = new PainelPrincipal();
@@ -75,7 +74,7 @@ public void senhaPanel() {
 		else if (pp!=null)
 			this.remove(pp);
 		
-		ps = new PainelSenha();
+		ps = new PainelSenha("Senha.png");
 		this.repaint();
 		this.add(ps);
 	}

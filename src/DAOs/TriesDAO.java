@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 import Sistema.ConectaBD;
 import Sistema.Digest;
-import Sistema.RandomNumber;
 import Sistema.User;
+import Suporte.RandomNumber;
 
 public class TriesDAO {
 

@@ -10,6 +10,7 @@ import DAOs.TriesDAO;
 import Interface.FramePrincipal;
 import Interface.PainelCadastro;
 import Interface.PainelPrincipal;
+import Interface.PainelSenha;
 import Sistema.Log;
 import Sistema.User;
 
@@ -18,11 +19,22 @@ public class TratadorBotoes implements MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 
 		FramePrincipal fp = FramePrincipal.getInstance();
+		User user = new User();
 		JFrame frame = new JFrame();
 
 		if (arg0.getComponent().getName().equals("Cadastrar"))
 		{
 			fp.cadastraPanel();
+		}
+		
+		if (arg0.getComponent().getName().equals("ConfirmaSenha"))
+		{
+			PainelSenha pp = (PainelSenha) arg0.getComponent().getParent();
+			if (pp.testaIntegridadeSenha(fp.user.getSenha())) {
+				fp.cadastraPanel();
+			} else {
+				JOptionPane.showMessageDialog(frame, "Senha incorreta!", "", JOptionPane.OK_OPTION);
+			}
 		}
 		
 		else if (arg0.getComponent().getName().equals("Conectar"))
@@ -31,7 +43,6 @@ public class TratadorBotoes implements MouseListener {
 			String login = pp.getLogin().getText();
 			
 			try {
-				User user = new User();
 				if(user.buscarUser(login)) {
 					fp.senhaPanel();
 				} else {
@@ -68,7 +79,6 @@ public class TratadorBotoes implements MouseListener {
 		else if (arg0.getComponent().getName().equals("Confirmar"))
 		{	
 			PainelCadastro pc = (PainelCadastro) arg0.getComponent().getParent();
-			User user = new User();
 
 			if (!pc.getTextnome().getText().equals("")
 					&& !pc.getTextlogin().getText().equals("")

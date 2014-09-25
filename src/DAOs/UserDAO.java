@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 import Sistema.ConectaBD;
 import Sistema.Digest;
-import Sistema.RandomNumber;
 import Sistema.User;
+import Suporte.RandomNumber;
 
 public class UserDAO {
 	
@@ -59,7 +59,7 @@ public class UserDAO {
             connect();
             con = this.con;
             String hashSenha = user.getSenha()+randomNumber;
-            hashSenha = digest.getDigest("SHA1", hashSenha);
+            hashSenha = digest.getDigest("MD5", hashSenha);
             ps = con.prepareStatement(insert);
             ps.setString(1, user.getNome());
             ps.setString(2, user.getLogin());
@@ -112,6 +112,38 @@ public class UserDAO {
         catch(SQLException sqle)
         {
             throw new Exception("Erro ao buscar usuário." + sqle);
+        }
+       
+        
+    }
+	
+	public String buscaSaltUser (String username) throws Exception
+    {
+        PreparedStatement ps = null;
+        Connection con = null;
+        ResultSet rs = null;
+        
+        try
+        {
+        	String busca = "SELECT number FROM randomNumbers WHERE id=?";
+        	
+            connect();
+            con = this.con;
+            ps = con.prepareStatement(busca);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            
+            if (!rs.next()){
+                return null;
+            }
+            
+            ConectaBD.closeConnection(con, ps);
+            return rs.getString("number");
+     
+        }
+        catch(SQLException sqle)
+        {
+            throw new Exception("Erro ao conferir senha." + sqle);
         }
        
         

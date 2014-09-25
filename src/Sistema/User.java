@@ -3,11 +3,12 @@ package Sistema;
 import java.util.Date;
 
 import DAOs.UserDAO;
+import Interface.FramePrincipal;
 
 public class User {
 
 	String nome, login, senha, grupo;
-
+	
 	public User() {
 		nome = "";
 		login = "";
@@ -70,7 +71,18 @@ public class User {
 			return bool;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			throw new Exception("ID já existente. " + e);
+			throw new Exception("Erro ao buscar. " + e);
+		}
+
+	}
+	
+	public String buscarSaltUser(String login) throws Exception {
+		try {
+			UserDAO cDAO = new UserDAO();
+			return cDAO.buscaSaltUser(login);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception("Erro ao conferir. " + e);
 		}
 
 	}

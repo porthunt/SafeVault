@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import Sistema.ConectaBD;
 import Sistema.Digest;
 import Sistema.Log;
-import Sistema.RandomNumber;
+import Suporte.RandomNumber;
 
 public class LogDAO {
 	
