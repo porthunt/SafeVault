@@ -42,7 +42,7 @@ public class FramePrincipal extends JFrame {
 		
 		if (pp!=null)
 			this.remove(pp);
-		else if (ps!=null)
+		if (ps!=null)
 			this.remove(ps);
 		
 		try {
@@ -59,7 +59,7 @@ public class FramePrincipal extends JFrame {
 		
 		if (pc!=null)
 			this.remove(pc);
-		else if (ps!=null)
+		if (ps!=null)
 			this.remove(ps);
 		
 		this.repaint();
@@ -71,7 +71,7 @@ public void senhaPanel() {
 		
 		if (pc!=null)
 			this.remove(pc);
-		else if (pp!=null)
+		if (pp!=null)
 			this.remove(pp);
 		
 		ps = new PainelSenha("Senha.png");

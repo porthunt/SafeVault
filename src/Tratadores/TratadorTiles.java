@@ -122,7 +122,6 @@ public class TratadorTiles implements MouseListener {
 			}
 		}
 		
-		System.out.println(fp.user.getSenha());
 		Integer novo = (fp.user.getSenha().length())/2;
 		ps.renameJF(novo.toString());
 		ps.repaint();
