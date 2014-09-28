@@ -1,5 +1,6 @@
 package Interface;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -28,7 +29,6 @@ public class PainelSenha extends JPanel {
 	public BufferedImage i;
 	TratadorBotoes tb;
 	TratadorTiles tl;
-	JTextField login;
 	JLabel aviso;
 	RandomNumber rn = new RandomNumber();
 	FramePrincipal fp = FramePrincipal.getInstance();
@@ -81,6 +81,14 @@ public class PainelSenha extends JPanel {
 		go.setBounds(426, 305, 35, 36);
 		go.setVisible(false);
 		this.add(go);
+		
+		aviso = new JLabel();
+		aviso.setBounds(0, 375, LARG_DEFAULT, 100);
+		aviso.setHorizontalAlignment(SwingConstants.CENTER);
+		aviso.setFont(new Font("Helvetica", Font.PLAIN,13));
+		aviso.setForeground(Color.RED);
+		aviso.setVisible(true);
+		this.add(aviso);
 
 		this.setLayout(null);
 		Dimension size = new Dimension(i.getWidth(null), i.getHeight(null));
@@ -170,5 +178,24 @@ public class PainelSenha extends JPanel {
 	public ActionButton getGo() {
 		return go;
 	}
+	
+	public JPasswordField getJf() {
+		return jf;
+	}
 
+	public void limpaSenha() {
+		this.jf.setText("");
+	}
+
+	public void limpaConectar() {
+		this.go.setVisible(false);
+	}
+
+	public JLabel getAviso() {
+		return aviso;
+	}
+
+	public void setAviso(String aviso) {
+		this.aviso.setText(aviso);
+	}
 }

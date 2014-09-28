@@ -28,7 +28,7 @@ public class Main {
 			UserDAO cdao = new UserDAO();
 			LogDAO ldao = new LogDAO();
 			Log log = new Log();
-			log.cadastraLog(1001, null);
+			log.cadastraLog(1001, null, null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

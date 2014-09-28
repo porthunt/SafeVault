@@ -80,7 +80,7 @@ public class UserDAO {
         ConectaBD.closeConnection(con, ps);
     }
 	
-	public boolean buscaUser (String username) throws Exception
+	public boolean confereUser (String username) throws Exception
     {
         PreparedStatement ps = null;
         Connection con = null;
@@ -103,11 +103,44 @@ public class UserDAO {
             ConectaBD.closeConnection(con, ps);
             return true;
             
+        }
+        catch(SQLException sqle)
+        {
+            throw new Exception("Erro ao buscar usuário." + sqle);
+        }
+       
+        
+    }
+	
+	public User buscaUser (String username) throws Exception
+    {
+        PreparedStatement ps = null;
+        Connection con = null;
+        ResultSet rs = null;
+        User usr = new User();
+        
+        try
+        {
+        	String busca = "SELECT * FROM user WHERE login=?";
+        	
+            connect();
+            con = this.con;
+            ps = con.prepareStatement(busca);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
             
-//            else {
-//            	return true;
-//            }
-     
+            if (!rs.next()){
+                return null;
+            }
+            
+            usr.setLogin(rs.getString("login"));
+            usr.setNome(rs.getString("nome"));
+            usr.setGrupo(rs.getString("grupo"));
+            
+            
+            ConectaBD.closeConnection(con, ps);
+            return usr;
+            
         }
         catch(SQLException sqle)
         {

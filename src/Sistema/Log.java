@@ -8,6 +8,7 @@ public class Log {
 
 	private Integer id;
 	private String user=null;
+	private String nome_arq=null;
 	private Date data;
 
 	public Log(Integer id, String user) {
@@ -22,9 +23,10 @@ public class Log {
 	public Log() {
 	}
 
-	public void cadastraLog(Integer id, String user) throws Exception {
+	public void cadastraLog(Integer id, String user, String nome_arq) throws Exception {
 		this.id = id;
 		this.user = user;
+		this.nome_arq = nome_arq;
 		
 		try {
 			LogDAO lDAO = new LogDAO();
@@ -50,6 +52,14 @@ public class Log {
 
 	public void setUser(String user) {
 		this.user = user;
+	}
+
+	public String getNome_arq() {
+		return nome_arq;
+	}
+
+	public void setNome_arq(String nome_arq) {
+		this.nome_arq = nome_arq;
 	}
 
 }

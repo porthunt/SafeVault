@@ -51,8 +51,8 @@ public class LogDAO {
         
         try
         {
-        	String insert = "INSERT INTO log (id, data, user) VALUES" +
-        			"(?,?,?)";
+        	String insert = "INSERT INTO log (id, data, user, nome_arq) VALUES" +
+        			"(?,?,?,?)";
         	java.util.Date date = new java.util.Date();
         	java.sql.Date datesql = new java.sql.Date(date.getTime());
         	
@@ -62,6 +62,7 @@ public class LogDAO {
             ps.setInt(1, log.getId());
             ps.setDate(2, datesql);
             ps.setString(3, log.getUser());
+            ps.setString(3, log.getNome_arq());
             ps.executeUpdate();
         }
         catch(SQLException sqle)

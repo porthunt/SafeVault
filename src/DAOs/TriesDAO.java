@@ -69,7 +69,6 @@ public class TriesDAO {
 			try
 			{
 				String update = "UPDATE tries SET tries= ? WHERE login=?";
-
 				connect();
 				con = this.con;
 				ps = con.prepareStatement(update);

@@ -66,11 +66,24 @@ public class User {
 
 	}
 	
-	public boolean buscarUser(String login) throws Exception {
+	public boolean confereUser(String login) throws Exception {
 		try {
 			UserDAO cDAO = new UserDAO();
-			Boolean bool = cDAO.buscaUser(login);
+			Boolean bool = cDAO.confereUser(login);
 			return bool;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception("Erro ao buscar. " + e);
+		}
+
+	}
+	
+	public User buscarUser(String login) throws Exception {
+		try {
+			User usr = new User();
+			UserDAO cDAO = new UserDAO();
+			usr = cDAO.buscaUser(login);
+			return usr;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw new Exception("Erro ao buscar. " + e);
@@ -90,6 +103,9 @@ public class User {
 	}
 	
 	public String buscaHashSenha(String login) throws Exception {
+		if (login==null)
+			System.exit(1);
+		
 		try {
 			UserDAO cDAO = new UserDAO();
 			return cDAO.buscaHashSenha(login);
@@ -98,6 +114,10 @@ public class User {
 			throw new Exception("Erro ao conferir. " + e);
 		}
 
+	}
+	
+	public boolean testaChave(String pathChave) throws Exception {
+		return false;
 	}
 	
 	public boolean testaSenha(String senha, String confirmasenha) {
@@ -127,6 +147,10 @@ public class User {
 	public boolean testaIntegridadeSenha(String senha) {
 
 		String salt=null;	
+		
+		if(senha==null)
+			return false;
+		
 		try {
 			salt = this.buscarSaltUser(this.getLogin());
 		} catch (Exception e) {
@@ -203,6 +227,8 @@ public class User {
 		return false;
 	}
 	
+	
+	
 	public static boolean isNumeric(String str)  
 	{  
 	  try  
@@ -214,6 +240,11 @@ public class User {
 	    return false;  
 	  }  
 	  return true;  
+	}
+	
+	public void clear() {
+		this.login="";
+		this.senha="";
 	}
 
 }

@@ -48,9 +48,31 @@ public class PainelCadastro extends JPanel {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}
+		Font font = new Font("Helvetica", Font.BOLD,16);
+		FramePrincipal fp = FramePrincipal.getInstance();
+		
+		JLabel login = new JLabel(fp.user.getLogin());
+		login.setFont(font);
+		login.setForeground(Color.WHITE);
+		login.setBounds(90,15,50, 20);
+		login.setVisible(true);
+		this.add(login);
+		
+		JLabel grupo = new JLabel(fp.user.getGrupo());
+		grupo.setFont(font);
+		grupo.setForeground(Color.WHITE);
+		grupo.setBounds(90,50,150, 20);
+		grupo.setVisible(true);
+		this.add(grupo);
+		
+		JLabel nome = new JLabel(fp.user.getNome());
+		nome.setFont(font);
+		nome.setForeground(Color.WHITE);
+		nome.setBounds(300,40,350, 20);
+		nome.setVisible(true);
+		this.add(nome);
 
 		this.setLayout(null);
-		Font font = new Font("Helvetica", Font.BOLD,18);
 		DocumentFilter df = new DocumentFilter() {
 
 			@Override
@@ -125,7 +147,7 @@ public class PainelCadastro extends JPanel {
 		// Confirmar
 
 		ActionButton confirmar = new ActionButton("confirmar.png");
-		confirmar.setName("Confirmar");
+		confirmar.setName("ConfirmarCadastro");
 		confirmar.setBounds(376, 418, 182, 56);
 		confirmar.setVisible(true);
 		this.add(confirmar);

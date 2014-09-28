@@ -51,13 +51,6 @@ public class PainelPrincipal extends JPanel {
 		login.setVisible(true);
 		this.add(login);
 		
-		JButton cadastrar = new JButton();
-		cadastrar.setBounds(20, 20, 20, 20);
-		cadastrar.setVisible(true);
-		cadastrar.setName("Cadastrar");
-		cadastrar.addMouseListener(tb);
-		this.add(cadastrar);
-		
 		ConnectButton connect = new ConnectButton();
 		connect.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		connect.setBounds(290, 364, 94, 42);
@@ -73,6 +66,13 @@ public class PainelPrincipal extends JPanel {
 		close.setName("Fechar");
 		close.addMouseListener(tb);
 		this.add(close);
+		
+		JButton cadastro = new JButton();
+		cadastro.setBounds(10, 10, 20, 20);
+		cadastro.setVisible(true);
+		cadastro.setName("Admin");
+		cadastro.addMouseListener(tb);
+		this.add(cadastro);
 		
 		aviso = new JLabel();
 		aviso.setBounds(0, 375, LARG_DEFAULT, 100);
