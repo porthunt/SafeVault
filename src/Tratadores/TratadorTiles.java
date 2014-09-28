@@ -16,6 +16,7 @@ public class TratadorTiles implements MouseListener {
 
 		FramePrincipal fp = FramePrincipal.getInstance();
 		PainelSenha ps = (PainelSenha) arg0.getComponent().getParent();
+		String novaTela = "imagens/telas/Senha2.png";
 
 		if (arg0.getComponent().getName().equals("Tile1"))
 		{
@@ -27,7 +28,7 @@ public class TratadorTiles implements MouseListener {
 			} else {
 				try
 				{
-					ps.setI(ImageIO.read(new File("Senha2.png")));
+					ps.setI(ImageIO.read(new File(novaTela)));
 					ps.getGo().setVisible(true);
 				}
 				catch(IOException e)
@@ -48,7 +49,7 @@ public class TratadorTiles implements MouseListener {
 			} else {
 				try
 				{
-					ps.setI(ImageIO.read(new File("Senha2.png")));
+					ps.setI(ImageIO.read(new File(novaTela)));
 					ps.getGo().setVisible(true);
 				}
 				catch(IOException e)
@@ -69,7 +70,7 @@ public class TratadorTiles implements MouseListener {
 			} else {
 				try
 				{
-					ps.setI(ImageIO.read(new File("Senha2.png")));
+					ps.setI(ImageIO.read(new File(novaTela)));
 					ps.getGo().setVisible(true);
 				}
 				catch(IOException e)
@@ -90,7 +91,7 @@ public class TratadorTiles implements MouseListener {
 			} else {
 				try
 				{
-					ps.setI(ImageIO.read(new File("Senha2.png")));
+					ps.setI(ImageIO.read(new File(novaTela)));
 					ps.getGo().setVisible(true);
 				}
 				catch(IOException e)
@@ -111,7 +112,7 @@ public class TratadorTiles implements MouseListener {
 				} else {
 				try
 				{
-					ps.setI(ImageIO.read(new File("Senha2.png")));
+					ps.setI(ImageIO.read(new File(novaTela)));
 					ps.getGo().setVisible(true);
 				}
 				catch(IOException e)

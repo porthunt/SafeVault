@@ -41,7 +41,7 @@ public class PainelCadastro extends JPanel {
 
 		try
 		{
-			i=ImageIO.read(new File("cadastro.png"));
+			i=ImageIO.read(new File("imagens/telas/cadastro.png"));
 		}
 		catch(IOException e)
 		{
@@ -137,7 +137,7 @@ public class PainelCadastro extends JPanel {
 
 		//defaultBorder = textnome.getBorder();
 
-		ActionButton voltar = new ActionButton("voltar.png");
+		ActionButton voltar = new ActionButton("imagens/botoes/voltar.png");
 		voltar.setName("Voltar");
 		voltar.setBounds(152, 418, 182, 56);
 		voltar.setVisible(true);
@@ -146,7 +146,7 @@ public class PainelCadastro extends JPanel {
 
 		// Confirmar
 
-		ActionButton confirmar = new ActionButton("confirmar.png");
+		ActionButton confirmar = new ActionButton("imagens/botoes/confirmar.png");
 		confirmar.setName("ConfirmarCadastro");
 		confirmar.setBounds(376, 418, 182, 56);
 		confirmar.setVisible(true);

@@ -20,7 +20,7 @@ public class TileButton extends JButton {
 	{
 		try
 		{
-			i=ImageIO.read(new File("tile.png"));
+			i=ImageIO.read(new File("imagens/botoes/tile.png"));
 		}
 		catch(IOException e)
 		{

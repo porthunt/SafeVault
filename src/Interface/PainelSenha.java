@@ -75,7 +75,7 @@ public class PainelSenha extends JPanel {
 		this.add(close);
 
 		tb = new TratadorBotoes();
-		go = new ActionButton("go.png");
+		go = new ActionButton("imagens/botoes/go.png");
 		go.setName("ConfirmaSenha");
 		go.addMouseListener(tb);
 		go.setBounds(426, 305, 35, 36);

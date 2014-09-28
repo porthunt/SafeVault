@@ -16,7 +16,7 @@ public class ConnectButton extends JButton {
 	{
 		try
 		{
-			i=ImageIO.read(new File("connect.png"));
+			i=ImageIO.read(new File("imagens/botoes/connect.png"));
 		}
 		catch(IOException e)
 		{

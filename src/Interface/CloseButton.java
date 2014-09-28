@@ -16,7 +16,7 @@ public class CloseButton extends JButton {
 	{
 		try
 		{
-			i=ImageIO.read(new File("close.png"));
+			i=ImageIO.read(new File("imagens/botoes/close.png"));
 		}
 		catch(IOException e)
 		{

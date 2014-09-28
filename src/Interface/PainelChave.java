@@ -33,7 +33,7 @@ public class PainelChave extends JPanel {
 
 		try
 		{
-			i=ImageIO.read(new File("Chave.png"));
+			i=ImageIO.read(new File("imagens/telas/Chave.png"));
 		}
 		catch(IOException e)
 		{

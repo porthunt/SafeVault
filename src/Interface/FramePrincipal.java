@@ -105,7 +105,7 @@ public class FramePrincipal extends JFrame {
 			e1.printStackTrace();
 		}
 		
-		ps = new PainelSenha("Senha.png");
+		ps = new PainelSenha("imagens/telas/Senha.png");
 		this.repaint();
 		this.add(ps);
 	}

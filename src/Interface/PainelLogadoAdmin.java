@@ -33,7 +33,7 @@ public class PainelLogadoAdmin extends JPanel {
 
 		try
 		{
-			i=ImageIO.read(new File("PainelAdmin.png"));
+			i=ImageIO.read(new File("imagens/telas/PainelAdmin.png"));
 		}
 		catch(IOException e)
 		{
@@ -65,7 +65,7 @@ public class PainelLogadoAdmin extends JPanel {
 		nome.setVisible(true);
 		this.add(nome);
 		
-		ActionButton cadastrar = new ActionButton("cadastrarMenu.png");
+		ActionButton cadastrar = new ActionButton("imagens/botoes/cadastrarMenu.png");
 		cadastrar.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		cadastrar.setBounds(11, 152, 283, 25);
 		cadastrar.setVisible(true);
@@ -73,7 +73,7 @@ public class PainelLogadoAdmin extends JPanel {
 		cadastrar.addMouseListener(tb);
 		this.add(cadastrar);
 		
-		ActionButton consultar = new ActionButton("ConsultarMenu.png");
+		ActionButton consultar = new ActionButton("imagens/botoes/ConsultarMenu.png");
 		consultar.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		consultar.setBounds(13, 196, 375, 25);
 		consultar.setVisible(true);
@@ -81,7 +81,7 @@ public class PainelLogadoAdmin extends JPanel {
 		consultar.addMouseListener(tb);
 		this.add(consultar);
 		
-		ActionButton sair = new ActionButton("SairMenu.png");
+		ActionButton sair = new ActionButton("imagens/botoes/SairMenu.png");
 		sair.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		sair.setBounds(15, 241, 175, 22);
 		sair.setVisible(true);

@@ -33,7 +33,7 @@ public class PainelPrincipal extends JPanel {
 
 		try
 		{
-			i=ImageIO.read(new File("tela.png"));
+			i=ImageIO.read(new File("imagens/telas/tela.png"));
 		}
 		catch(IOException e)
 		{
