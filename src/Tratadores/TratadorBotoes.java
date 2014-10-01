@@ -51,16 +51,10 @@ public class TratadorBotoes implements MouseListener {
 			String login = fp.user.getLogin();
 			Log log = new Log();
 			
-			try {
-				log.cadastraLog(3002, fp.user.getLogin(), null);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
 			if (fp.user.testaIntegridadeSenha(fp.user.getSenha())) {
 				try {
 					log.cadastraLog(3003, fp.user.getLogin(), null);
+					log.cadastraLog(3002, fp.user.getLogin(), null);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -105,17 +99,12 @@ public class TratadorBotoes implements MouseListener {
 		{
 			PainelChave pch = (PainelChave) arg0.getComponent().getParent();
 			Log log = new Log();
-			try {
-				log.cadastraLog(4002, fp.user.getLogin(), null);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			
 			try {
 				if (fp.user.testaChave(pch.getChavePrivada(), pch.getSeed())) {
 					log.cadastraLog(4003, fp.user.getLogin(), null);
 					JOptionPane.showMessageDialog(frame, "Logado com sucesso!", "", JOptionPane.PLAIN_MESSAGE);
+					log.cadastraLog(4002, fp.user.getLogin(), null);
 					fp.user = fp.user.buscarUser(fp.user.getLogin());
 					fp.logadoPainel(fp.user.getGrupo());
 				} else {
@@ -140,13 +129,14 @@ public class TratadorBotoes implements MouseListener {
 				
 				if(user.confereUser(login)) {
 					fp.user.setLogin(login);
+					log.cadastraLog(2001, null, null);
 					log.cadastraLog(2003, login, null);
+					log.cadastraLog(2002, null, null);
 					fp.senhaPanel();
 				} else {
 					log.cadastraLog(2005, login, null);
 					pp.repaint();
 				}
-				log.cadastraLog(2002, null, null);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

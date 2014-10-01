@@ -56,6 +56,8 @@ public class LogDAO {
         {
         	String insert = "INSERT INTO log (id, data, user, nome_arq) VALUES" +
         			"(?,?,?,?)";
+        	String busca = "SELECT Mensagem FROM Mensagens WHERE MID=?";
+        	
         	java.util.Date date = new java.util.Date();
         	java.sql.Date datesql = new java.sql.Date(date.getTime());
         	
@@ -67,6 +69,25 @@ public class LogDAO {
             ps.setString(3, log.getUser());
             ps.setString(4, log.getNome_arq());
             ps.executeUpdate();
+            
+            ps = con.prepareStatement(busca);
+            ps.setInt(1, log.getId());
+            rs = ps.executeQuery();
+            
+            if (!rs.next()){
+                return;
+            }
+            
+            String msg = rs.getString("Mensagem");
+            
+            if(msg.contains("<login_name>") && log.getUser()!=null) {
+				msg = msg.replace("<login_name>", log.getUser());
+			}
+            if(msg.contains("<arq_name>") && log.getNome_arq()!=null) {
+				msg = msg.replace("<arq_name>", log.getNome_arq());
+			}
+            
+            System.out.println(date+"\t"+log.getId()+"\t"+msg);
         }
         catch(SQLException sqle)
         {

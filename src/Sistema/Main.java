@@ -21,6 +21,7 @@ public class Main {
 		Image image = Toolkit.getDefaultToolkit().getImage("imagens/logo.png");
 		application.setDockIconImage(image);
 		FramePrincipal frameprincipal = FramePrincipal.getInstance();
+		System.out.println("\tDATA\t\t\tID\tDESCRICAO");
 		
 		try {
 			TriesDAO tdao = new TriesDAO();

@@ -27,6 +27,7 @@ public class FramePrincipal extends JFrame {
 		this.setTitle("SafeVault v"+version);
 		this.setBounds(0, 0, LARG_DEFAULT, ALT_DEFAULT);
 		this.setLocationRelativeTo(null);
+		this.setTitle("SafeVault");
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.setResizable(false);
 		this.setLayout(null);

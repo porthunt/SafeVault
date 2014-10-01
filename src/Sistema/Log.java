@@ -95,7 +95,6 @@ public class Log {
 				if (listaLog.get(i).msg.contains("<arq_name>") && listaLog.get(i).nome_arq!=null) {
 					listaLog.get(i).msg = listaLog.get(i).msg.replace("<arq_name>", listaLog.get(i).nome_arq);
 				}
-				System.out.println(listaLog.get(i).id+" "+listaLog.get(i).msg);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
