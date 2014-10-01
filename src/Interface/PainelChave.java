@@ -23,9 +23,9 @@ public class PainelChave extends JPanel {
 	public BufferedImage i;
 	TratadorBotoes tb;
 	FramePrincipal fp = FramePrincipal.getInstance();
-	String pathChavePrivada;
+	String pathChavePrivada, seed;
 	ActionButton go;
-	JTextField pathChave;
+	JTextField pathChave, passphrase;
 
 	public PainelChave() {
 
@@ -47,9 +47,17 @@ public class PainelChave extends JPanel {
 		pathChave.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		pathChave.setFont(font);
 		pathChave.setHorizontalAlignment(SwingConstants.CENTER);
-		pathChave.setBounds(168, 307, 355, 32);
+		pathChave.setBounds(163, 293, 355, 32);
 		pathChave.setVisible(true);
 		this.add(pathChave);
+		
+		passphrase = new JTextField();
+		passphrase.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		passphrase.setFont(font);
+		passphrase.setHorizontalAlignment(SwingConstants.CENTER);
+		passphrase.setBounds(163, 364, 355, 32);
+		passphrase.setVisible(true);
+		this.add(passphrase);
 		
 		CloseButton close = new CloseButton();
 		close.setBorder(javax.swing.BorderFactory.createEmptyBorder());
@@ -61,7 +69,7 @@ public class PainelChave extends JPanel {
 		
 		ConnectButton connect = new ConnectButton();
 		connect.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		connect.setBounds(290, 364, 94, 42);
+		connect.setBounds(290, 402, 94, 42);
 		connect.setVisible(true);
 		connect.setName("ConectarChave");
 		connect.addMouseListener(tb);
@@ -86,9 +94,11 @@ public class PainelChave extends JPanel {
 	}
 
 	public String getChavePrivada() {
-		return pathChavePrivada;
+		return pathChave.getText();
 	}
 	
-	
+	public String getSeed() {
+		return passphrase.getText();
+	}
 
 }

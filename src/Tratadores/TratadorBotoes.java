@@ -113,7 +113,7 @@ public class TratadorBotoes implements MouseListener {
 			}
 			
 			try {
-				if (/*fp.user.testaChave(pch.getChavePrivada())*/true) {
+				if (fp.user.testaChave(pch.getChavePrivada(), pch.getSeed())) {
 					log.cadastraLog(4003, fp.user.getLogin(), null);
 					JOptionPane.showMessageDialog(frame, "Logado com sucesso!", "", JOptionPane.PLAIN_MESSAGE);
 					fp.user = fp.user.buscarUser(fp.user.getLogin());

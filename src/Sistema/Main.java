@@ -18,7 +18,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Application application = Application.getApplication();
-		Image image = Toolkit.getDefaultToolkit().getImage("safevault.png");
+		Image image = Toolkit.getDefaultToolkit().getImage("imagens/logo.png");
 		application.setDockIconImage(image);
 		FramePrincipal frameprincipal = FramePrincipal.getInstance();
 		
@@ -28,6 +28,7 @@ public class Main {
 			UserDAO cdao = new UserDAO();
 			LogDAO ldao = new LogDAO();
 			Log log = new Log();
+			log.geraLog();
 			log.cadastraLog(1001, null, null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
