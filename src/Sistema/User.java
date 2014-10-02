@@ -5,9 +5,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Key;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.SecureRandom;
+import java.security.Signature;
+import java.security.spec.EncodedKeySpec;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -17,6 +26,7 @@ import DAOs.UserDAO;
 public class User {
 
 	String nome, login, senha, grupo;
+	byte[] chavePublica;
 	
 	public User() {
 		nome = "";
@@ -57,11 +67,20 @@ public class User {
 		this.grupo = grupo;
 	}
 
-	public void cadastraUser(String nome, String login, String senha, String grupo) throws Exception {
+	public byte[] getChavePublica() {
+		return chavePublica;
+	}
+
+	public void setChavePublica(byte[] chavePublica) {
+		this.chavePublica = chavePublica;
+	}
+
+	public void cadastraUser(String nome, String login, String senha, String grupo, byte[] pub_chave) throws Exception {
 		this.nome = nome;
 		this.login = login;
 		this.senha = senha;
 		this.grupo = grupo;
+		this.chavePublica = pub_chave;
 
 		try {
 			UserDAO cDAO = new UserDAO();
@@ -126,27 +145,85 @@ public class User {
 	public boolean testaChave(String pathChave, String seed) throws Exception {
 		KeyGenerator keyGen = KeyGenerator.getInstance("DES");
 		SecureRandom seedRand = SecureRandom.getInstance("SHA1PRNG", "SUN");
-	    keyGen.init(56);
+		seedRand.setSeed(seed.getBytes());
+	    keyGen.init(56, seedRand);
 	    Key key = keyGen.generateKey();
-	    Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+	    File file = new File(pathChave);
+	    byte[] pubKey;
+	    
+	    PrivateKey privateKey = decryptPrivateKeyFile(file, key);
+	    ////////////
+	    
+	    try {
+			UserDAO cDAO = new UserDAO();
+			pubKey = cDAO.buscaChavePubUser(login);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception("Erro ao conferir. " + e);
+		}
+		
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+		EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(pubKey);
+		PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
+		
+		byte[] randomBytes = generateRandomBytes();
+		
+		Signature signature = Signature.getInstance("MD5WithRSA");
+	    signature.initSign(privateKey);
+	    signature.update(randomBytes);
+	    byte[] signatureBytes = signature.sign();
+	    
+	    signature.initVerify(publicKey);
+	    signature.update(randomBytes);
+	    
+	    if(signature.verify(signatureBytes)) {
+			return true;
+	    }
 	    
 	    
-		return true;
+		return false;
 	}
 	
-	public static byte[] getBytesFromFile(File file) throws IOException {
+	public byte[] generateRandomBytes() {
+		byte[] bytes = new byte[512];
+		Random r = new Random();
+		r.nextBytes(bytes);
+		return bytes;
+	}
+	
+	public PrivateKey decryptPrivateKeyFile(File file, Key key) throws Exception{
+		byte[] plainText;
+		PrivateKey privateKey=null;
+        Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+		byte[] cipherText = getBytesFromFile(file);
+		
+	    cipher.init(Cipher.DECRYPT_MODE, key);
+	    plainText = cipher.doFinal(cipherText);
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+		EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(plainText);
+		
+		try {
+			privateKey = keyFactory.generatePrivate(privateKeySpec);
+		} catch (InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
+		return privateKey;
+		
+	}
+	
+	public byte[] getBytesFromFile(File file) throws IOException {
 		InputStream is = new FileInputStream(file);
- 
+
 		// Get the size of the file
 		long length = file.length();
- 
+
 		if (length > Integer.MAX_VALUE) {
 			// File is too large
 		}
- 
+
 		// Create the byte array to hold the data
 		byte[] bytes = new byte[(int)length];
- 
+
 		// Read in the bytes
 		int offset = 0;
 		int numRead = 0;
@@ -154,17 +231,18 @@ public class User {
 				&& (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
 			offset += numRead;
 		}
- 
+
 		// Ensure all the bytes have been read in
 		if (offset < bytes.length) {
 			throw new IOException("Could not completely read file "+file.getName());
 		}
- 
+
 		// Close the input stream and return bytes
 		is.close();
 		return bytes;
 	}
-	
+
+		
 	public boolean testaSenha(String senha, String confirmasenha) {
 		if (!senha.equals(confirmasenha))
 			return false;

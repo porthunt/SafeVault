@@ -23,9 +23,11 @@ public class PainelPrincipal extends JPanel {
 	public final int ALT_DEFAULT = 510;
 	public final int COORD_Y=110;
 	private BufferedImage i;
+	public ConnectButton connect;
 	TratadorBotoes tb;
 	JTextField login;
 	JLabel aviso;
+	FramePrincipal fp = FramePrincipal.getInstance();
 
 	public PainelPrincipal() {
 		
@@ -51,7 +53,7 @@ public class PainelPrincipal extends JPanel {
 		login.setVisible(true);
 		this.add(login);
 		
-		ConnectButton connect = new ConnectButton();
+		connect = new ConnectButton();
 		connect.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		connect.setBounds(290, 364, 94, 42);
 		connect.setVisible(true);

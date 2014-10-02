@@ -81,7 +81,6 @@ public class FramePrincipal extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		this.repaint();
 		this.add(pp);
 

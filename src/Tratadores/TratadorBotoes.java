@@ -210,10 +210,11 @@ public class TratadorBotoes implements MouseListener {
 
 					//pc.bordaNormal();
 					try {
-						fp.user.cadastraUser(nome, login, senha.toString(), grupo);
+						fp.user.cadastraUser(nome, login, senha.toString(), grupo, fp.user.getBytesFromFile(new File(caminhochave)));
 						JOptionPane.showMessageDialog(frame, "Cadastrado com sucesso!", "", JOptionPane.PLAIN_MESSAGE);
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(frame, "ID já existente!", "", JOptionPane.OK_OPTION);
+						e.printStackTrace();
 					}
 					fp.principalPanel();
 				} else {

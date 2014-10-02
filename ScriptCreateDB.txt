@@ -1,4 +1,4 @@
-CREATE TABLE user (nome varchar[100], login char[10] PRIMARY KEY, senha char[164], grupo char[10]);
+CREATE TABLE user (nome varchar[100], login char[10] PRIMARY KEY, senha char[164], grupo char[10], chave_publica BLOB);
 CREATE TABLE log (id INTEGER, data DATE, user char[10], nome_arq char[100], FOREIGN KEY(user) REFERENCES user(id));
 CREATE TABLE Mensagens (MID INTEGER PRIMARY KEY, Mensagem TEXT, FOREIGN KEY(MID) REFERENCES log(id));
 CREATE TABLE tries (login char[20] PRIMARY KEY, tries INTEGER, FOREIGN KEY(login) REFERENCES user(login));
