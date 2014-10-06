@@ -24,8 +24,6 @@ public class Main {
 		System.out.println("\tDATA\t\t\tID\tDESCRICAO");
 		
 		try {
-			TriesDAO tdao = new TriesDAO();
-			tdao.removeTentativas();
 			UserDAO cdao = new UserDAO();
 			LogDAO ldao = new LogDAO();
 			Log log = new Log();

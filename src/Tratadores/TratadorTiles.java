@@ -20,7 +20,7 @@ public class TratadorTiles implements MouseListener {
 
 		if (arg0.getComponent().getName().equals("Tile1"))
 		{
-			fp.user.setSenha (fp.user.getSenha()+ps.getPasswordBuilder().substring(0, 2));	
+			fp.user.setSenha (fp.user.getSenha()+ps.getPasswordBuilder().substring(0, 2));
 			ps.removeTiles();
 			if(fp.user.getSenha().length()<12) {
 				ps.resetPasswordBuilder();
@@ -122,7 +122,6 @@ public class TratadorTiles implements MouseListener {
 				}
 			}
 		}
-		
 		Integer novo = (fp.user.getSenha().length())/2;
 		ps.renameJF(novo.toString());
 		ps.repaint();

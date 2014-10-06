@@ -37,7 +37,7 @@ public class PainelCadastro extends JPanel {
 	private JTextField textgrupo;
 	private BufferedImage i;
 
-	public PainelCadastro() throws ParseException {
+	public PainelCadastro() throws Exception {
 
 		try
 		{
@@ -72,6 +72,15 @@ public class PainelCadastro extends JPanel {
 		nome.setVisible(true);
 		this.add(nome);
 
+		System.out.println(fp.user.contaUsers().toString());
+		JLabel numUsers = new JLabel(fp.user.contaUsers().toString());
+		numUsers.setFont(font);
+		numUsers.setForeground(Color.WHITE);
+		numUsers.setBounds(642,71,50, 20);
+		numUsers.setVisible(true);
+		this.add(numUsers);
+
+		
 		this.setLayout(null);
 		DocumentFilter df = new DocumentFilter() {
 

@@ -72,7 +72,7 @@ public class PainelPrincipal extends JPanel {
 		JButton cadastro = new JButton();
 		cadastro.setBounds(10, 10, 20, 20);
 		cadastro.setVisible(true);
-		cadastro.setName("Admin");
+		cadastro.setName("Consultar");
 		cadastro.addMouseListener(tb);
 		this.add(cadastro);
 		

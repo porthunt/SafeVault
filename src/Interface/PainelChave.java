@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -26,6 +27,7 @@ public class PainelChave extends JPanel {
 	String pathChavePrivada, seed;
 	ActionButton go;
 	JTextField pathChave, passphrase;
+	JLabel aviso;
 
 	public PainelChave() {
 
@@ -75,6 +77,14 @@ public class PainelChave extends JPanel {
 		connect.addMouseListener(tb);
 		this.add(connect);
 
+		aviso = new JLabel();
+		aviso.setBounds(0, 375, LARG_DEFAULT, 100);
+		aviso.setHorizontalAlignment(SwingConstants.CENTER);
+		aviso.setFont(new Font("Helvetica", Font.PLAIN,13));
+		aviso.setForeground(Color.RED);
+		aviso.setVisible(true);
+		this.add(aviso);
+		
 		this.setLayout(null);
 		Dimension size = new Dimension(i.getWidth(null), i.getHeight(null));
 		setPreferredSize(size);
@@ -89,6 +99,14 @@ public class PainelChave extends JPanel {
 		g.drawImage(i, 0, 0, getWidth(), getHeight(), this);
 	}
 	
+	public JLabel getAviso() {
+		return aviso;
+	}
+
+	public void setAviso(JLabel aviso) {
+		this.aviso = aviso;
+	}
+
 	public ActionButton getGo() {
 		return go;
 	}

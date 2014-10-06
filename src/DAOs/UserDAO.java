@@ -131,9 +131,37 @@ public class UserDAO {
         catch(SQLException sqle)
         {
             throw new Exception("Erro ao buscar usuário." + sqle);
-        }
-       
+        }   
+    }
+	
+	public Integer contaUsers () throws Exception
+    {
+        PreparedStatement ps = null;
+        Connection con = null;
+        ResultSet rs = null;
         
+        try
+        {
+        	String busca = "SELECT count(*) FROM user";
+        	
+            connect();
+            con = this.con;
+            ps = con.prepareStatement(busca);
+            rs = ps.executeQuery();
+            
+            if (!rs.next()){
+                return 0;
+            }
+            
+            Integer usuarios = rs.getInt(1);
+            ConectaBD.closeConnection(con, ps);
+            return usuarios;
+            
+        }
+        catch(SQLException sqle)
+        {
+            throw new Exception("Erro ao buscar usuário." + sqle);
+        }   
     }
 	
 	public User buscaUser (String username) throws Exception

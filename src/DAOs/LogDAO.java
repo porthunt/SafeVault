@@ -138,5 +138,44 @@ public class LogDAO {
        
         
     }
-	
+
+	public List<Log> buscaUserLog(String login) throws Exception
+    {
+        PreparedStatement ps = null;
+        Connection con = null;
+        ResultSet rs = null;
+        Log log;
+        List<Log> listaLogs = new ArrayList<Log>();
+        
+        try
+        {
+        	String busca = "SELECT * FROM log WHERE user=? ORDER BY data asc";
+        	
+            connect();
+            con = this.con;
+            ps = con.prepareStatement(busca);
+            ps.setString(1, login);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+            	log = new Log();
+            	log.setId(Integer.parseInt(rs.getString("id")));
+                log.setUser(rs.getString("user"));
+                log.setNome_arq(rs.getString("nome_arq"));
+                log.setData(rs.getDate("data"));
+                log.setMsg("");
+                listaLogs.add(log);
+            }
+            ConectaBD.closeConnection(con, ps);
+            return listaLogs;
+            
+        }
+        catch(SQLException sqle)
+        {
+            throw new Exception("Erro ao buscar log." + sqle);
+        }
+       
+        
+    }
+
 }

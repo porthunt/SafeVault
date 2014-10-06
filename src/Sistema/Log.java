@@ -3,7 +3,10 @@ package Sistema;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JLabel;
+
 import DAOs.LogDAO;
+import Interface.FramePrincipal;
 
 public class Log {
 
@@ -17,16 +20,16 @@ public class Log {
 		this.id = id;
 		this.user = user;
 	}
-	
+
 	public Log(Integer id) {
 		this.id = id;
 	}
-	
+
 	public Log() {
 	}
 
 	public void cadastraLog(Integer id, String user, String nome_arq) throws Exception {
-		
+
 		try {
 			Log log = new Log();
 			log.setId(id);
@@ -36,7 +39,7 @@ public class Log {
 			lDAO.insereLog(log);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			throw new Exception("ID já existente. " + e);
+			throw new Exception("Erro ao cadastrar log. " + e);
 		}
 
 	}
@@ -64,7 +67,7 @@ public class Log {
 	public void setNome_arq(String nome_arq) {
 		this.nome_arq = nome_arq;
 	}
-	
+
 	public Date getData() {
 		return data;
 	}
@@ -81,8 +84,44 @@ public class Log {
 		this.msg = msg;
 	}
 
+	public boolean checaBloqueio(String login, JLabel jl) {
+		try {
+			LogDAO lDAO = new LogDAO();
+			List<Log> lstLog = lDAO.buscaUserLog(login);
+			FramePrincipal fp = FramePrincipal.getInstance();
+			
+			if(lstLog!=null || !lstLog.isEmpty()) {
+				for (int i=0; i<lstLog.size(); i++) {
+					java.util.Date datasql = new java.util.Date();
+					datasql = lstLog.get(i).data;
+					java.util.Date data = new java.util.Date();
+					if (lstLog.get(i).id==2004 || lstLog.get(i).id==3008 || lstLog.get(i).id==4007) {
+						if (data.getTime() - datasql.getTime() < 2*60*1000) {
+							jl.setText("Usuário bloqueado. Tente novamente em: "+(120-(data.getTime() - datasql.getTime())/1000)+" segundos.");
+							return true;
+						}
+					}
+					else if(lstLog.get(i).id==3005) {
+						jl.setText("Senha inválida. Você possui mais 2 tentativas.");
+					} else if(lstLog.get(i).id==3006) {
+						jl.setText("Senha inválida. Você possui mais 1 tentativa.");
+					} else if (lstLog.get(i).id==3007) {
+						jl.setText("Usuário bloqueado. Tente novamente em: "+(120-(data.getTime() - datasql.getTime())/1000)+" segundos.");
+					}
+				}
+			}
+
+			return false;
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public void geraLog() throws Exception {
-		
+
 		try {
 			LogDAO lDAO = new LogDAO();
 			List<Log> listaLog = lDAO.buscaLog();

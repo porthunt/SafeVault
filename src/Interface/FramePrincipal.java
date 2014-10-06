@@ -1,12 +1,11 @@
 package Interface;
+import java.security.PrivateKey;
 import java.text.ParseException;
 
 import javax.swing.JFrame;
 
 import Sistema.Log;
 import Sistema.User;
-import Sistema.Version;
-import Tratadores.TratadorBotoes;
 
 public class FramePrincipal extends JFrame {
 
@@ -15,9 +14,10 @@ public class FramePrincipal extends JFrame {
 
 	private PainelPrincipal pp;
 	private PainelCadastro pc;
+	private PainelConsulta pcon;
 	private PainelSenha ps;
 	private PainelChave pch;
-	private PainelLogadoAdmin pl;
+	private PainelLogado pl;
 	public User user;
 	String version = "0.5";
 
@@ -42,7 +42,7 @@ public class FramePrincipal extends JFrame {
 		return INSTANCE;
 	}
 
-	public void cadastraPanel() {
+	public void cadastraPanel() throws Exception {
 
 		if (pp!=null)
 			this.remove(pp);
@@ -62,6 +62,22 @@ public class FramePrincipal extends JFrame {
 			e.printStackTrace();
 		}
 	}
+	
+	public PainelPrincipal getPainelPrincipal() {
+		return pp;
+	}
+
+	public PainelSenha getPainelSenha() {
+		return ps;
+	}
+
+	public PainelChave getPainelChave() {
+		return pch;
+	}
+
+	public PainelLogado getPainelLogado() {
+		return pl;
+	}
 
 	public void principalPanel() {
 
@@ -73,7 +89,9 @@ public class FramePrincipal extends JFrame {
 			this.remove(pch);
 		if (pl!=null)
 			this.remove(pl);
-
+		if (ps!=null)
+			this.remove(ps);
+		
 		Log log = new Log();
 		try {
 			log.cadastraLog(2001, null, null);
@@ -85,7 +103,7 @@ public class FramePrincipal extends JFrame {
 		this.add(pp);
 
 	}
-
+	
 	public void senhaPanel() {
 
 		if (pc!=null)
@@ -97,15 +115,11 @@ public class FramePrincipal extends JFrame {
 		if (pl!=null)
 			this.remove(pl);
 
-		Log log = new Log();
-		try {
-			log.cadastraLog(3001, this.user.getLogin(), null);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
 		ps = new PainelSenha("imagens/telas/Senha.png");
+		if(this.user.tentativas==1)
+			ps.aviso.setText("Senha inválida. Você possui mais 2 tentativas.");
+		else if(this.user.tentativas==2)
+			ps.aviso.setText("Senha inválida. Você possui mais 1 tentativa.");
 		this.repaint();
 		this.add(ps);
 	}
@@ -145,9 +159,9 @@ public class FramePrincipal extends JFrame {
 		if (pch!=null)
 			this.remove(pch);
 		if (grupo.equals("Administrador"))
-			pl = new PainelLogadoAdmin();
-		//else if (grupo.equals("Usuário"))
-		//	pl = new PainelLogadoUser();
+			pl = new PainelLogado("Administrador");
+		if (grupo.equals("Usuários"))
+			pl = new PainelLogado("Usuários");
 		Log log = new Log();
 		try {
 			log.cadastraLog(5001, this.user.getLogin(), null);
@@ -159,5 +173,31 @@ public class FramePrincipal extends JFrame {
 		this.repaint();
 		this.add(pl);
 	}
+	
+	public void consultaPanel() {
+
+		if (pc!=null)
+			this.remove(pc);
+		if (pp!=null)
+			this.remove(pp);
+		if (ps!=null)
+			this.remove(ps);
+		if (pch!=null)
+			this.remove(pch);
+		if (pl!=null)
+			this.remove(pl);
+		
+		Log log = new Log();
+		try {
+			log.cadastraLog(8001, this.user.getLogin(), null);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		pcon = new PainelConsulta();
+		this.repaint();
+		this.add(pcon);
+	}
+
 
 }

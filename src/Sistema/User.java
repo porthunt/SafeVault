@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.Key;
 import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
@@ -20,19 +22,25 @@ import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
+import javax.swing.JLabel;
 
 import DAOs.UserDAO;
+import Interface.FramePrincipal;
 
 public class User {
 
 	String nome, login, senha, grupo;
 	byte[] chavePublica;
+	public int tentativas;
+	PrivateKey privKey;
+	PublicKey pubKey;
 	
 	public User() {
 		nome = "";
 		login = "";
 		senha = "";
 		grupo = "";
+		tentativas=0;
 	}
 
 	public String getNome() {
@@ -92,9 +100,18 @@ public class User {
 
 	}
 	
+	public void setPrivKey(PrivateKey privKey) {
+		this.privKey = privKey;
+	}
+
+	public PrivateKey getPrivKey() {
+		return privKey;
+	}
+
 	public boolean confereUser(String login) throws Exception {
 		try {
 			UserDAO cDAO = new UserDAO();
+			Log log = new Log();
 			Boolean bool = cDAO.confereUser(login);
 			return bool;
 		} catch (Exception e) {
@@ -104,11 +121,23 @@ public class User {
 
 	}
 	
+	public Integer contaUsers() throws Exception {
+		try {
+			UserDAO cDAO = new UserDAO();
+			return cDAO.contaUsers();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception("Erro ao buscar. " + e);
+		}
+	}
+	
 	public User buscarUser(String login) throws Exception {
 		try {
+			FramePrincipal fp = FramePrincipal.getInstance();
 			User usr = new User();
 			UserDAO cDAO = new UserDAO();
 			usr = cDAO.buscaUser(login);
+			usr.privKey = fp.user.privKey;
 			return usr;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -143,6 +172,7 @@ public class User {
 	}
 	
 	public boolean testaChave(String pathChave, String seed) throws Exception {
+		FramePrincipal fp = FramePrincipal.getInstance();
 		KeyGenerator keyGen = KeyGenerator.getInstance("DES");
 		SecureRandom seedRand = SecureRandom.getInstance("SHA1PRNG", "SUN");
 		seedRand.setSeed(seed.getBytes());
@@ -151,8 +181,7 @@ public class User {
 	    File file = new File(pathChave);
 	    byte[] pubKey;
 	    
-	    PrivateKey privateKey = decryptPrivateKeyFile(file, key);
-	    ////////////
+	    PrivateKey privateKey = decriptaPrivateKey(file, key);
 	    
 	    try {
 			UserDAO cDAO = new UserDAO();
@@ -166,20 +195,20 @@ public class User {
 		EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(pubKey);
 		PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
 		
-		byte[] randomBytes = generateRandomBytes();
+		byte[] random = generateRandomBytes();
 		
 		Signature signature = Signature.getInstance("MD5WithRSA");
 	    signature.initSign(privateKey);
-	    signature.update(randomBytes);
+	    signature.update(random);
 	    byte[] signatureBytes = signature.sign();
-	    
 	    signature.initVerify(publicKey);
-	    signature.update(randomBytes);
+	    signature.update(random);
 	    
 	    if(signature.verify(signatureBytes)) {
+	    	fp.user.privKey = privateKey;
+	    	fp.user.pubKey = publicKey;
 			return true;
 	    }
-	    
 	    
 		return false;
 	}
@@ -191,7 +220,8 @@ public class User {
 		return bytes;
 	}
 	
-	public PrivateKey decryptPrivateKeyFile(File file, Key key) throws Exception{
+	public PrivateKey decriptaPrivateKey(File file, Key key) throws Exception{
+		FramePrincipal fp = FramePrincipal.getInstance();
 		byte[] plainText;
 		PrivateKey privateKey=null;
         Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
@@ -207,6 +237,7 @@ public class User {
 		} catch (InvalidKeySpecException e) {
 			e.printStackTrace();
 		}
+		fp.user.privKey = privateKey;
 		return privateKey;
 		
 	}
@@ -369,5 +400,16 @@ public class User {
 		this.login="";
 		this.senha="";
 	}
+	
+//	public PrivateKey getPrivateKey () throws Exception {
+//		KeyGenerator keyGen = KeyGenerator.getInstance("DES");
+//		SecureRandom seedRand = SecureRandom.getInstance("SHA1PRNG", "SUN");
+//		seedRand.setSeed("segredo".getBytes());
+//	    keyGen.init(56, seedRand);
+//	    Key key = keyGen.generateKey();
+//	    File file = new File("/userpriv");
+//	    
+//	    return decriptaPrivateKey(file, key);
+//	}
 
 }
