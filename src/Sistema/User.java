@@ -32,6 +32,7 @@ public class User {
 	String nome, login, senha, grupo;
 	byte[] chavePublica;
 	public int tentativas;
+	public Integer acessos;
 	PrivateKey privKey;
 	PublicKey pubKey;
 	
@@ -65,6 +66,10 @@ public class User {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public Integer getAcessos() {
+		return acessos;
 	}
 
 	public String getGrupo() {
@@ -138,6 +143,7 @@ public class User {
 			UserDAO cDAO = new UserDAO();
 			usr = cDAO.buscaUser(login);
 			usr.privKey = fp.user.privKey;
+			usr.pubKey = fp.user.pubKey;
 			return usr;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -401,15 +407,22 @@ public class User {
 		this.senha="";
 	}
 	
-//	public PrivateKey getPrivateKey () throws Exception {
-//		KeyGenerator keyGen = KeyGenerator.getInstance("DES");
-//		SecureRandom seedRand = SecureRandom.getInstance("SHA1PRNG", "SUN");
-//		seedRand.setSeed("segredo".getBytes());
-//	    keyGen.init(56, seedRand);
-//	    Key key = keyGen.generateKey();
-//	    File file = new File("/userpriv");
-//	    
-//	    return decriptaPrivateKey(file, key);
-//	}
+	
+	public void userLogoff() {
+		Log log = new Log();
+		FramePrincipal fp = FramePrincipal.getInstance();
+		Arquivos arq = new Arquivos();
+		try {
+			if(fp.user.getLogin()!="")
+				log.cadastraLog(9002, fp.user.getLogin(), null);
+			arq.removeArqDecriptados();
+			log.cadastraLog(1002, null, null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		fp.writer.close();
+		System.exit(1);
+	}
 
 }

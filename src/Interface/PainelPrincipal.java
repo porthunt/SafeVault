@@ -69,13 +69,6 @@ public class PainelPrincipal extends JPanel {
 		close.addMouseListener(tb);
 		this.add(close);
 		
-		JButton cadastro = new JButton();
-		cadastro.setBounds(10, 10, 20, 20);
-		cadastro.setVisible(true);
-		cadastro.setName("Consultar");
-		cadastro.addMouseListener(tb);
-		this.add(cadastro);
-		
 		aviso = new JLabel();
 		aviso.setBounds(0, 375, LARG_DEFAULT, 100);
 		aviso.setHorizontalAlignment(SwingConstants.CENTER);

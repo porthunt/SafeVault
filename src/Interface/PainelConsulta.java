@@ -32,8 +32,10 @@ public class PainelConsulta extends JPanel {
 	String pathChavePrivada, seed;
 	ActionButton go;
 	JLabel pathArquivos;
+	JTable table;
+	JLabel acessos;
 
-	public PainelConsulta() {
+	public PainelConsulta() throws Exception {
 
 		tb = new TratadorBotoes();
 
@@ -49,6 +51,14 @@ public class PainelConsulta extends JPanel {
 
 		Arquivos arq = new Arquivos();
 		Font font = new Font("Helvetica", Font.BOLD,14);
+		
+		acessos = new JLabel(fp.user.getAcessos().toString());
+		acessos.setFont(font);
+		acessos.setForeground(Color.WHITE);
+		acessos.setBounds(650,67,50, 20);
+		acessos.setVisible(true);
+		this.add(acessos);
+
 
 		pathArquivos = new JLabel(arq.getCaminhoPasta());
 		pathArquivos.setFont(font);
@@ -58,7 +68,7 @@ public class PainelConsulta extends JPanel {
 		this.add(pathArquivos);
 
 		ActionButton voltar = new ActionButton("imagens/botoes/voltar.png");
-		voltar.setName("Voltar");
+		voltar.setName("VoltarConsulta");
 		voltar.setBounds(153, 419, 182, 56);
 		voltar.setVisible(true);
 		this.add(voltar);
@@ -77,10 +87,30 @@ public class PainelConsulta extends JPanel {
 		String[][] data= new String[100][100];
 		List<String> fileList = arq.ReadFileAsList("index");
 		for (int i=0; i<fileList.size(); i++) {
-			data[i][0] = fileList.get(i).substring(0, fileList.get(i).indexOf(" "));
-			data[i][1] = fileList.get(i).substring(fileList.get(i).indexOf(" "), fileList.get(i).length());
+			if(fileList.get(i).length()>1) {
+				data[i][0] = fileList.get(i).substring(0, fileList.get(i).indexOf(" "));
+				data[i][1] = fileList.get(i).substring(fileList.get(i).indexOf(" "), fileList.get(i).length());
+				try {
+					String extensao = data[i][0].substring(data[i][0].indexOf("."), data[i][0].length());
+					byte[] arquivo = arq.decriptaArquivo(data[i][1].trim(), extensao, data[i][1].trim(), 1);
+					if(arquivo==null) {
+						data[i][2] = "NOT OK";
+					} else {
+						data[i][2] = "OK";
+					}
+					if(!arq.checaIntegridade(data[i][1].trim(), arquivo)) {
+						data[i][3]= "NOT OK";
+					} else {
+						data[i][3]= "OK";
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		
+			}
 		}
-		JTable table = new JTable(data, columns);
+		table = new JTable(data, columns);
 		TableColumn columnA = table.getColumn("NOME");
         columnA.setMinWidth(255);
         columnA.setMaxWidth(255);
@@ -116,4 +146,7 @@ public class PainelConsulta extends JPanel {
 		g.drawImage(i, 0, 0, getWidth(), getHeight(), this);
 	}
 
+	public JTable getTable() {
+		return table;
+	}
 }

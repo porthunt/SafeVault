@@ -51,25 +51,6 @@ public class UserDAO {
         RandomNumber rn = new RandomNumber();
         String randomNumber = rn.randomize();
         Digest digest = new Digest();
-//        File pkey = new File(user.getChavePublica());
-//        FileInputStream fis = new FileInputStream(pkey);
-//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//        byte[] buf = new byte[1024];
-//        byte[] key = null;
-//        
-//        try {
-//            for (int readNum; (readNum = fis.read(buf)) != -1;)
-//            {
-//                bos.write(buf, 0, readNum);
-//                //no doubt here is 0
-//                /*Writes len bytes from the specified byte array starting at offset
-//                off to this byte array output stream.*/
-//                //System.out.println("read " + readNum + " bytes,");
-//            }
-//        } catch (IOException ex) {
-//            System.err.println(ex.getMessage());
-//        }
-//        key = bos.toByteArray();
         
         try
         {
@@ -134,7 +115,7 @@ public class UserDAO {
         }   
     }
 	
-	public Integer contaUsers () throws Exception
+	public Integer contaUsers() throws Exception
     {
         PreparedStatement ps = null;
         Connection con = null;

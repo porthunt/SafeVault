@@ -1,0 +1,30 @@
+Wed Oct 08 23:00:20 BRT 2014	1001	 Sistema iniciado.
+Wed Oct 08 23:00:22 BRT 2014	2001	 Autenticação etapa 1 iniciada.
+Wed Oct 08 23:00:22 BRT 2014	2003	 Login name root identificado com acesso liberado.
+Wed Oct 08 23:00:22 BRT 2014	2002	 Autenticação etapa 1 encerrada.
+Wed Oct 08 23:00:22 BRT 2014	3001	 Autenticação etapa 2 iniciada para root.
+Wed Oct 08 23:00:36 BRT 2014	3003	 Senha pessoal verificada positivamente para root.
+Wed Oct 08 23:00:37 BRT 2014	3002	 Autenticação etapa 2 encerrada para root.
+Wed Oct 08 23:00:37 BRT 2014	4001	 Autenticação etapa 3 iniciada para root.
+Wed Oct 08 23:00:42 BRT 2014	4003	 Chave privada verificada positivamente para root.
+Wed Oct 08 23:00:42 BRT 2014	4002	 Autenticação etapa 3 encerrada para root.
+Wed Oct 08 23:00:42 BRT 2014	5001	 Tela principal apresentada para root.
+Wed Oct 08 23:00:56 BRT 2014	5002	 Opção 1 do menu principal selecionada por root.
+Wed Oct 08 23:00:56 BRT 2014	6001	 Tela de cadastro apresentada para root.
+Wed Oct 08 23:00:58 BRT 2014	6003	 Botão voltar de cadastrar para o menu principal pressionado por root.
+Wed Oct 08 23:00:58 BRT 2014	5001	 Tela principal apresentada para root.
+Wed Oct 08 23:01:00 BRT 2014	5002	 Opção 1 do menu principal selecionada por root.
+Wed Oct 08 23:01:00 BRT 2014	6001	 Tela de cadastro apresentada para root.
+Wed Oct 08 23:01:24 BRT 2014	6002	 Botão cadastrar pressionado por root.
+Wed Oct 08 23:01:25 BRT 2014	5001	 Tela principal apresentada para root.
+Wed Oct 08 23:01:27 BRT 2014	5003	 Opção 2 do menu principal selecionada por root.
+Wed Oct 08 23:01:27 BRT 2014	8001	 Tela de consulta apresentada para root.
+Wed Oct 08 23:01:32 BRT 2014	8003	 Arquivo Teste.doc selecionado por root para decriptação.
+Wed Oct 08 23:01:32 BRT 2014	8004	 Arquivo Teste.doc decriptado com sucesso para root.
+Wed Oct 08 23:01:32 BRT 2014	8005	 Arquivo Teste.doc verificado com sucesso para root.
+Wed Oct 08 23:01:41 BRT 2014	8002	 Botão voltar de consultar para o menu principal pressionado por root.
+Wed Oct 08 23:01:41 BRT 2014	5001	 Tela principal apresentada para root.
+Wed Oct 08 23:01:43 BRT 2014	9001	 Tela de saída apresentada para root.
+Wed Oct 08 23:01:48 BRT 2014	9002	 Botão sair pressionado por root.
+Wed Oct 08 23:01:48 BRT 2014	9004	 Arquivos decriptados apagados com sucesso para <login name>.
+Wed Oct 08 23:01:48 BRT 2014	1002	 Sistema encerrado.

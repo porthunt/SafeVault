@@ -9,12 +9,11 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
+import Sistema.Log;
 import Tratadores.TratadorBotoes;
 
 public class PainelLogado extends JPanel {
@@ -25,7 +24,7 @@ public class PainelLogado extends JPanel {
 	private BufferedImage i;
 	TratadorBotoes tb;
 	JTextField login;
-	JLabel aviso;
+	JLabel acessos;
 
 	public PainelLogado(String grupoIdent) {
 
@@ -46,6 +45,14 @@ public class PainelLogado extends JPanel {
 
 		Font font = new Font("Helvetica", Font.BOLD,16);
 		FramePrincipal fp = FramePrincipal.getInstance();
+
+		acessos = new JLabel(fp.user.getAcessos().toString());
+		acessos.setFont(font);
+		acessos.setForeground(Color.WHITE);
+		acessos.setBounds(650,67,50, 20);
+		acessos.setVisible(true);
+		this.add(acessos);
+
 
 		JLabel login = new JLabel(fp.user.getLogin());
 		login.setFont(font);
@@ -113,10 +120,6 @@ public class PainelLogado extends JPanel {
 
 	public JTextField getLogin() {
 		return login;
-	}
-
-	public JLabel getAviso() {
-		return aviso;
 	}
 
 	protected void paintComponent(Graphics g) {

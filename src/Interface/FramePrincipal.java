@@ -1,4 +1,6 @@
 package Interface;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.security.PrivateKey;
 import java.text.ParseException;
 
@@ -20,6 +22,7 @@ public class FramePrincipal extends JFrame {
 	private PainelLogado pl;
 	public User user;
 	String version = "0.5";
+	public PrintWriter writer;
 
 	private static final FramePrincipal INSTANCE = new FramePrincipal();
 
@@ -32,6 +35,12 @@ public class FramePrincipal extends JFrame {
 		this.setResizable(false);
 		this.setLayout(null);
 		user = new User();
+		try {
+			writer = new PrintWriter("acesso.log");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		pp = new PainelPrincipal();
 		this.add(pp);
@@ -91,6 +100,8 @@ public class FramePrincipal extends JFrame {
 			this.remove(pl);
 		if (ps!=null)
 			this.remove(ps);
+		if (pcon!=null)
+			this.remove(pcon);
 		
 		Log log = new Log();
 		try {
@@ -114,6 +125,8 @@ public class FramePrincipal extends JFrame {
 			this.remove(pch);
 		if (pl!=null)
 			this.remove(pl);
+		if (pcon!=null)
+			this.remove(pcon);
 
 		ps = new PainelSenha("imagens/telas/Senha.png");
 		if(this.user.tentativas==1)
@@ -134,6 +147,8 @@ public class FramePrincipal extends JFrame {
 			this.remove(ps);
 		if (pl!=null)
 			this.remove(pl);
+		if (pcon!=null)
+			this.remove(pcon);
 		
 		Log log = new Log();
 		try {
@@ -154,6 +169,8 @@ public class FramePrincipal extends JFrame {
 			this.remove(pc);
 		if (pp!=null)
 			this.remove(pp);
+		if (pcon!=null)
+			this.remove(pcon);
 		if (ps!=null)
 			this.remove(ps);
 		if (pch!=null)
@@ -174,7 +191,7 @@ public class FramePrincipal extends JFrame {
 		this.add(pl);
 	}
 	
-	public void consultaPanel() {
+	public void consultaPanel() throws Exception {
 
 		if (pc!=null)
 			this.remove(pc);

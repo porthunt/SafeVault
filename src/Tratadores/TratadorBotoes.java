@@ -1,17 +1,9 @@
 package Tratadores;
 
-import java.awt.HeadlessException;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -19,12 +11,13 @@ import javax.swing.JOptionPane;
 import Interface.FramePrincipal;
 import Interface.PainelCadastro;
 import Interface.PainelChave;
+import Interface.PainelConsulta;
 import Interface.PainelPrincipal;
 import Interface.PainelSenha;
+import Interface.SairFrame;
 import Sistema.Arquivos;
 import Sistema.Log;
 import Sistema.User;
-import Suporte.RandomNumber;
 
 public class TratadorBotoes implements MouseListener {
 
@@ -103,29 +96,47 @@ public class TratadorBotoes implements MouseListener {
 					log.cadastraLog(4003, fp.user.getLogin(), null);
 					log.cadastraLog(4002, fp.user.getLogin(), null);
 					fp.user = fp.user.buscarUser(fp.user.getLogin());
+					fp.user.acessos = log.buscaAcessos(fp.user.getLogin());
 					fp.logadoPainel(fp.user.getGrupo());
-				} else {
-					if(fp.user.tentativas<2) {
-						fp.user.tentativas++;
-						if(fp.user.tentativas==1) {
-							log.cadastraLog(4004, fp.user.getLogin(), null);
-							pch.getAviso().setText("Chave inválida. Você possui mais 2 tentativas.");
-						}
-						else if(fp.user.tentativas==2) {
-							log.cadastraLog(4005, fp.user.getLogin(), null);
-							pch.getAviso().setText("Chave inválida. Você possui mais 1 tentativa.");
-						}
-					}
-					else {
-						log.cadastraLog(4006, fp.user.getLogin(), null);
-						log.cadastraLog(4007, fp.user.getLogin(), null);
-						System.exit(1);
-					}
-					pch.repaint();
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				if(fp.user.tentativas<2) {
+					fp.user.tentativas++;
+					if(fp.user.tentativas==1) {
+						try {
+							log.cadastraLog(4004, fp.user.getLogin(), null);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						pch.getAviso().setText("Chave inválida. Você possui mais 2 tentativas.");
+					}
+					else if(fp.user.tentativas==2) {
+						try {
+							log.cadastraLog(4005, fp.user.getLogin(), null);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						pch.getAviso().setText("Chave inválida. Você possui mais 1 tentativa.");
+					}
+				}
+				else {
+					try {
+						log.cadastraLog(4006, fp.user.getLogin(), null);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						log.cadastraLog(4007, fp.user.getLogin(), null);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					System.exit(1);
+				}
+				pch.repaint();
 			}
 		}
 
@@ -158,33 +169,79 @@ public class TratadorBotoes implements MouseListener {
 
 		else if (arg0.getComponent().getName().equals("Fechar"))
 		{
-			Log log = new Log();
-			try {
-				log.cadastraLog(9002, fp.user.getLogin(), null);
-				log.cadastraLog(1002, null, null);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(fp.isVisible()) {
+				fp.setVisible(false);
+				Log log = new Log();
+				try {
+					log.cadastraLog(9001, fp.user.getLogin(), null);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				SairFrame sf = new SairFrame();
+			} else {
+				fp.user.userLogoff();
+
 			}
-			System.exit(1);
 		}
-		
+
 		else if (arg0.getComponent().getName().equals("Decriptar"))
 		{
+			PainelConsulta pc = (PainelConsulta) arg0.getComponent().getParent();
+			int row = pc.getTable().getSelectedRow();
+			Log log = new Log();
 			
+			String nomeArq = (String)pc.getTable().getValueAt(row, 0);
+			String nomeEncrypt = (String)pc.getTable().getValueAt(row, 1);
+			
+			if (nomeArq!=null && nomeEncrypt!=null) {
+				Arquivos arq = new Arquivos();
+				String extensao = nomeArq.substring(nomeArq.indexOf("."), nomeArq.length());
+				nomeArq = nomeArq.substring(0, nomeArq.indexOf("."));
+				try {
+					log.cadastraLog(8003, fp.user.getLogin(), nomeArq+extensao);
+					arq.decriptaArquivo(nomeEncrypt.trim(), extensao, nomeArq, 0);
+					log.cadastraLog(8004, fp.user.getLogin(), nomeArq+extensao);
+					log.cadastraLog(8005, fp.user.getLogin(), nomeArq+extensao);
+					
+				} catch (Exception e) {
+					try {
+						log.cadastraLog(8006, fp.user.getLogin(), nomeArq+extensao);
+						log.cadastraLog(8007, fp.user.getLogin(), nomeArq+extensao);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+
+			}
 		}
 
 		else if (arg0.getComponent().getName().equals("FecharMenu"))
 		{
 			Log log = new Log();
-			try {
-				log.cadastraLog(5004, fp.user.getLogin(), null);
-				log.cadastraLog(1002, null, null);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(fp.isVisible()) {
+				fp.setVisible(false);
+				try {
+					log.cadastraLog(9001, fp.user.getLogin(), null);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				SairFrame sf = new SairFrame();
+			} else {
+				Arquivos arq = new Arquivos();
+				try {
+					log.cadastraLog(5004, fp.user.getLogin(), null);
+					arq.removeArqDecriptados();
+					log.cadastraLog(1002, null, null);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				fp.writer.close();
+				System.exit(1);
 			}
-			System.exit(1);
 		}
 
 		else if (arg0.getComponent().getName().equals("Consultar"))
@@ -192,9 +249,13 @@ public class TratadorBotoes implements MouseListener {
 			Log log = new Log();
 			try {
 				log.cadastraLog(5003, fp.user.getLogin(), null);
-				log.cadastraLog(8001, fp.user.getLogin(), null);
 				Arquivos arq = new Arquivos();
-				arq.decriptaArquivo("index");
+				byte[] newFile = arq.decriptaArquivo("index", ".txt", "index", 0);
+				if(newFile==null || !(arq.checaIntegridade("index", newFile))) {
+					JOptionPane.showMessageDialog(frame, "Arquivo index não integro! Programa sendo interrompido por falta de segurança!", "", JOptionPane.OK_OPTION);
+					arq.removeArqDecriptados();
+					System.exit(1);
+				}
 				fp.consultaPanel();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -228,15 +289,15 @@ public class TratadorBotoes implements MouseListener {
 					String grupo = (String) pc.getTextgrupo().getText();
 					String caminhochave = pc.getTextcaminhochave().getText();
 
-					//pc.bordaNormal();
 					try {
-						fp.user.cadastraUser(nome, login, senha.toString(), grupo, fp.user.getBytesFromFile(new File(caminhochave)));
+						User usr = new User();
+						usr.cadastraUser(nome, login, senha.toString(), grupo, fp.user.getBytesFromFile(new File(caminhochave)));
 						JOptionPane.showMessageDialog(frame, "Cadastrado com sucesso!", "", JOptionPane.PLAIN_MESSAGE);
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(frame, "ID já existente!", "", JOptionPane.OK_OPTION);
 						e.printStackTrace();
 					}
-					fp.principalPanel();
+					fp.logadoPainel(fp.user.getGrupo());
 				} else {
 					JOptionPane.showMessageDialog(frame, "A senha não é válida!", "", JOptionPane.OK_OPTION);
 				}
@@ -246,7 +307,7 @@ public class TratadorBotoes implements MouseListener {
 
 		}
 
-		else if (arg0.getComponent().getName().equals("Voltar"))
+		else if (arg0.getComponent().getName().equals("VoltarCadastro"))
 		{	
 			Log log = new Log();
 			try {
@@ -256,7 +317,33 @@ public class TratadorBotoes implements MouseListener {
 				e.printStackTrace();
 			}
 			fp.logadoPainel(fp.user.getGrupo());
-		}
+		} 
+
+		else if (arg0.getComponent().getName().equals("VoltarConsulta"))
+		{
+			Log log = new Log();
+			try {
+				log.cadastraLog(8002, fp.user.getLogin(), null);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			fp.logadoPainel(fp.user.getGrupo());
+		} 
+
+		else if (arg0.getComponent().getName().equals("VoltarSair"))
+		{	
+			SairFrame sf = (SairFrame) arg0.getComponent().getParent().getParent().getParent().getParent();
+			sf.dispose();
+			Log log = new Log();
+			try {
+				log.cadastraLog(9003, fp.user.getLogin(), null);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			fp.setVisible(true);
+		} 
 
 	}
 

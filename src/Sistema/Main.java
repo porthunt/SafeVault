@@ -1,10 +1,12 @@
 package Sistema;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 
 import DAOs.LogDAO;
-import DAOs.TriesDAO;
 import DAOs.UserDAO;
 import Interface.FramePrincipal;
 
@@ -14,15 +16,23 @@ import com.apple.eawt.Application;
 public class Main {
 
 	private Connection con;
-	
+
 	public static void main(String[] args) {
 		
+		File f = new File("acesso.log");
+		if(f.exists()) {
+			f.delete();
+		}
+
 		Application application = Application.getApplication();
 		Image image = Toolkit.getDefaultToolkit().getImage("imagens/logo.png");
 		application.setDockIconImage(image);
-		FramePrincipal frameprincipal = FramePrincipal.getInstance();
-		System.out.println("\tDATA\t\t\tID\tDESCRICAO");
+		FramePrincipal fp = FramePrincipal.getInstance();
+		Arquivos arq = new Arquivos();
+		arq.removeArqDecriptados();
 		
+		System.out.println("\tDATA\t\t\tID\tDESCRICAO");
+
 		try {
 			UserDAO cdao = new UserDAO();
 			LogDAO ldao = new LogDAO();
@@ -33,7 +43,7 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
+
 	}
 
 }

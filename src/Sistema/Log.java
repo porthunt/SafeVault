@@ -1,5 +1,6 @@
 package Sistema;
 
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +41,18 @@ public class Log {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw new Exception("Erro ao cadastrar log. " + e);
+		}
+
+	}
+	
+	public Integer buscaAcessos(String user) throws Exception {
+
+		try {
+			LogDAO lDAO = new LogDAO();
+			return lDAO.buscaAcessos(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception("Erro ao conferir acessos." + e);
 		}
 
 	}

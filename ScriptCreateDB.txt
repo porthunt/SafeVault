@@ -47,5 +47,5 @@ INSERT INTO Mensagens (MID,Mensagem) VALUES ('8007',' Falha na verificação do 
 INSERT INTO Mensagens (MID,Mensagem) VALUES ('9001',' Tela de saída apresentada para <login_name>.');
 INSERT INTO Mensagens (MID,Mensagem) VALUES ('9002',' Botão sair pressionado por <login_name>.');
 INSERT INTO Mensagens (MID,Mensagem) VALUES ('9003',' Botão voltar de sair para o menu principal pressionado por <login_name>.');
-INSERT INTO Mensagens (MID,Mensagem) VALUES ('9004',' Arquivos decriptados apagados com sucesso para <login name>.');
+INSERT INTO Mensagens (MID,Mensagem) VALUES ('9004',' Arquivos decriptados apagados com sucesso para <login_name>.');
 INSERT INTO Mensagens (MID,Mensagem) VALUES ('9005',' Arquivo decriptado <nome_arquivo> nao pode ser apagado para <login_name>. ');

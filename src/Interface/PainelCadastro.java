@@ -72,7 +72,6 @@ public class PainelCadastro extends JPanel {
 		nome.setVisible(true);
 		this.add(nome);
 
-		System.out.println(fp.user.contaUsers().toString());
 		JLabel numUsers = new JLabel(fp.user.contaUsers().toString());
 		numUsers.setFont(font);
 		numUsers.setForeground(Color.WHITE);
@@ -147,7 +146,7 @@ public class PainelCadastro extends JPanel {
 		//defaultBorder = textnome.getBorder();
 
 		ActionButton voltar = new ActionButton("imagens/botoes/voltar.png");
-		voltar.setName("Voltar");
+		voltar.setName("VoltarCadastro");
 		voltar.setBounds(152, 418, 182, 56);
 		voltar.setVisible(true);
 		this.add(voltar);

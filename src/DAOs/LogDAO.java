@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Interface.FramePrincipal;
 import Sistema.ConectaBD;
 import Sistema.Digest;
 import Sistema.Log;
@@ -51,6 +52,7 @@ public class LogDAO {
         RandomNumber rn = new RandomNumber();
         String randomNumber = rn.randomize();
         Digest digest = new Digest();
+        FramePrincipal fp = FramePrincipal.getInstance();
         
         try
         {
@@ -88,6 +90,8 @@ public class LogDAO {
 			}
             
             System.out.println(date+"\t"+log.getId()+"\t"+msg);
+            fp.writer.println(date+"\t"+log.getId()+"\t"+msg);
+            
         }
         catch(SQLException sqle)
         {
@@ -168,6 +172,40 @@ public class LogDAO {
             }
             ConectaBD.closeConnection(con, ps);
             return listaLogs;
+            
+        }
+        catch(SQLException sqle)
+        {
+            throw new Exception("Erro ao buscar log." + sqle);
+        }
+       
+        
+    }
+	
+	public int buscaAcessos(String login) throws Exception
+    {
+        PreparedStatement ps = null;
+        Connection con = null;
+        ResultSet rs = null;
+        
+        try
+        {
+        	String busca = "SELECT COUNT(*) FROM log WHERE user=? AND id=?";
+        	
+            connect();
+            con = this.con;
+            ps = con.prepareStatement(busca);
+            ps.setString(1, login);
+            ps.setInt(2, 5001);
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+            	int acessos = rs.getInt(1);
+                ConectaBD.closeConnection(con, ps);
+            	return acessos;
+            }
+            ConectaBD.closeConnection(con, ps);
+            return 0;
             
         }
         catch(SQLException sqle)

@@ -78,7 +78,7 @@ public class PainelChave extends JPanel {
 		this.add(connect);
 
 		aviso = new JLabel();
-		aviso.setBounds(0, 375, LARG_DEFAULT, 100);
+		aviso.setBounds(0, 198, LARG_DEFAULT, 100);
 		aviso.setHorizontalAlignment(SwingConstants.CENTER);
 		aviso.setFont(new Font("Helvetica", Font.PLAIN,13));
 		aviso.setForeground(Color.RED);
