@@ -201,7 +201,7 @@ public class User {
 		EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(pubKey);
 		PublicKey publicKey = keyFactory.generatePublic(publicKeySpec);
 		
-		byte[] random = generateRandomBytes();
+		byte[] random = geraRandomBytes(512);
 		
 		Signature signature = Signature.getInstance("MD5WithRSA");
 	    signature.initSign(privateKey);
@@ -219,8 +219,8 @@ public class User {
 		return false;
 	}
 	
-	public byte[] generateRandomBytes() {
-		byte[] bytes = new byte[512];
+	public byte[] geraRandomBytes(int i) {
+		byte[] bytes = new byte[i];
 		Random r = new Random();
 		r.nextBytes(bytes);
 		return bytes;

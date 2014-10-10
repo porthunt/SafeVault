@@ -17,12 +17,14 @@ import java.util.List;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
+import javax.swing.JTable;
 
 import Interface.FramePrincipal;
 
 public class Arquivos {
 
-	String caminhoPasta = "/Users/porthunt/Pacote-T3/Files/";
+	public String caminhoPasta;
+	public JTable table;
 
 	public Arquivos() {
 
@@ -119,10 +121,10 @@ public class Arquivos {
 	}
 
 	public void removeArqDecriptados() {
-		String decript = caminhoPasta+"decriptados/";
+		FramePrincipal fp = FramePrincipal.getInstance();
+		String decript = fp.path+"decriptados/";
 		File f = new File(decript);
 		Log log = new Log();
-		FramePrincipal fp = FramePrincipal.getInstance();
 		if(f.isDirectory()) {
 			File[] files = f.listFiles();
 			for (File file : files) {
@@ -137,13 +139,14 @@ public class Arquivos {
 					}
 				}
 			}
-
-			if(fp.user.getLogin()!="") {
-				try {
-					log.cadastraLog(9004, fp.user.getLogin(), null);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			if (files.length!=0) {
+				if(fp.user.getLogin()!="") {
+					try {
+						log.cadastraLog(9004, fp.user.getLogin(), null);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 

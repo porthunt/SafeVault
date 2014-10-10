@@ -23,6 +23,7 @@ public class FramePrincipal extends JFrame {
 	public User user;
 	String version = "0.5";
 	public PrintWriter writer;
+	public String path;
 
 	private static final FramePrincipal INSTANCE = new FramePrincipal();
 

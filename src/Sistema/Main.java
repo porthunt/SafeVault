@@ -28,8 +28,6 @@ public class Main {
 		Image image = Toolkit.getDefaultToolkit().getImage("imagens/logo.png");
 		application.setDockIconImage(image);
 		FramePrincipal fp = FramePrincipal.getInstance();
-		Arquivos arq = new Arquivos();
-		arq.removeArqDecriptados();
 		
 		System.out.println("\tDATA\t\t\tID\tDESCRICAO");
 

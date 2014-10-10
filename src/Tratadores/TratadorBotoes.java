@@ -1,12 +1,18 @@
 package Tratadores;
 
+import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.table.TableColumn;
 
 import Interface.FramePrincipal;
 import Interface.PainelCadastro;
@@ -26,6 +32,7 @@ public class TratadorBotoes implements MouseListener {
 		FramePrincipal fp = FramePrincipal.getInstance();
 		User user = new User();
 		JFrame frame = new JFrame();
+		JTable table=null;
 
 		if (arg0.getComponent().getName().equals("Cadastrar"))
 		{
@@ -97,6 +104,7 @@ public class TratadorBotoes implements MouseListener {
 					log.cadastraLog(4002, fp.user.getLogin(), null);
 					fp.user = fp.user.buscarUser(fp.user.getLogin());
 					fp.user.acessos = log.buscaAcessos(fp.user.getLogin());
+					fp.user.acessos++;
 					fp.logadoPainel(fp.user.getGrupo());
 				}
 			} catch (Exception e) {
@@ -190,30 +198,39 @@ public class TratadorBotoes implements MouseListener {
 			PainelConsulta pc = (PainelConsulta) arg0.getComponent().getParent();
 			int row = pc.getTable().getSelectedRow();
 			Log log = new Log();
-			
-			String nomeArq = (String)pc.getTable().getValueAt(row, 0);
-			String nomeEncrypt = (String)pc.getTable().getValueAt(row, 1);
-			
-			if (nomeArq!=null && nomeEncrypt!=null) {
-				Arquivos arq = new Arquivos();
-				String extensao = nomeArq.substring(nomeArq.indexOf("."), nomeArq.length());
-				nomeArq = nomeArq.substring(0, nomeArq.indexOf("."));
-				try {
-					log.cadastraLog(8003, fp.user.getLogin(), nomeArq+extensao);
-					arq.decriptaArquivo(nomeEncrypt.trim(), extensao, nomeArq, 0);
-					log.cadastraLog(8004, fp.user.getLogin(), nomeArq+extensao);
-					log.cadastraLog(8005, fp.user.getLogin(), nomeArq+extensao);
-					
-				} catch (Exception e) {
-					try {
-						log.cadastraLog(8006, fp.user.getLogin(), nomeArq+extensao);
-						log.cadastraLog(8007, fp.user.getLogin(), nomeArq+extensao);
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
 
+			if(!pc.getPath().getText().isEmpty()) {
+				String nomeArq = (String)pc.getTable().getValueAt(row, 0);
+				String nomeEncrypt = (String)pc.getTable().getValueAt(row, 1);
+				Arquivos arq = new Arquivos();
+
+				if (nomeArq!=null && nomeEncrypt!=null) {
+					if(pc.getPath().getText().endsWith("/"))
+						arq.caminhoPasta = pc.getPath().getText();
+					else
+						arq.caminhoPasta = pc.getPath().getText()+"/";
+					
+					String extensao = nomeArq.substring(nomeArq.indexOf("."), nomeArq.length());
+					nomeArq = nomeArq.substring(0, nomeArq.indexOf("."));
+					try {
+						log.cadastraLog(8003, fp.user.getLogin(), nomeArq+extensao);
+						arq.decriptaArquivo(nomeEncrypt.trim(), extensao, nomeArq, 0);
+						log.cadastraLog(8004, fp.user.getLogin(), nomeArq+extensao);
+						log.cadastraLog(8005, fp.user.getLogin(), nomeArq+extensao);
+
+					} catch (Exception e) {
+						try {
+							log.cadastraLog(8006, fp.user.getLogin(), nomeArq+extensao);
+							log.cadastraLog(8007, fp.user.getLogin(), nomeArq+extensao);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+
+				}
+			} else {
+				JOptionPane.showMessageDialog(frame, "Caminho de diretório não existe!", "", JOptionPane.OK_OPTION);
 			}
 		}
 
@@ -249,13 +266,13 @@ public class TratadorBotoes implements MouseListener {
 			Log log = new Log();
 			try {
 				log.cadastraLog(5003, fp.user.getLogin(), null);
-				Arquivos arq = new Arquivos();
-				byte[] newFile = arq.decriptaArquivo("index", ".txt", "index", 0);
-				if(newFile==null || !(arq.checaIntegridade("index", newFile))) {
-					JOptionPane.showMessageDialog(frame, "Arquivo index não integro! Programa sendo interrompido por falta de segurança!", "", JOptionPane.OK_OPTION);
-					arq.removeArqDecriptados();
-					System.exit(1);
-				}
+//				Arquivos arq = new Arquivos();
+//				byte[] newFile = arq.decriptaArquivo("index", ".txt", "index", 0);
+//				if(newFile==null || !(arq.checaIntegridade("index", newFile))) {
+//					JOptionPane.showMessageDialog(frame, "Arquivo index não integro! Programa sendo interrompido por falta de segurança!", "", JOptionPane.OK_OPTION);
+//					arq.removeArqDecriptados();
+//					System.exit(1);
+//				}
 				fp.consultaPanel();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -343,6 +360,86 @@ public class TratadorBotoes implements MouseListener {
 				e.printStackTrace();
 			}
 			fp.setVisible(true);
+		} 
+
+		else if (arg0.getComponent().getName().equals("Caminho"))
+		{	
+			PainelConsulta pc = (PainelConsulta) arg0.getComponent().getParent();
+			Arquivos arq = new Arquivos();
+			
+			if(pc.getPath().getText().endsWith("/"))
+				arq.caminhoPasta = pc.getPath().getText();
+			else
+				arq.caminhoPasta = pc.getPath().getText()+"/";
+
+			File path = new File(arq.caminhoPasta+"index.enc");
+			
+			if(path.exists()) {
+				pc.getPath().setEditable(false);
+				fp.path = arq.caminhoPasta;
+				File success = (new File(arq.caminhoPasta+"decriptados"));
+				success.mkdir();
+				try {
+					arq.decriptaArquivo("index", ".txt", "index", 0);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				/* add table */
+				String[] columns = { "NOME", "NOME ENCRIPTADO", "INTEGRIDADE", "AUTENTICIDADE" };
+				String[][] data= new String[100][100];
+				List<String> fileList = arq.ReadFileAsList("index");
+				for (int i=0; i<fileList.size(); i++) {
+					if(fileList.get(i).length()>1) {
+						data[i][0] = fileList.get(i).substring(0, fileList.get(i).indexOf(" "));
+						data[i][1] = fileList.get(i).substring(fileList.get(i).indexOf(" "), fileList.get(i).length());
+						try {
+							String extensao = data[i][0].substring(data[i][0].indexOf("."), data[i][0].length());
+							byte[] arquivo = arq.decriptaArquivo(data[i][1].trim(), extensao, data[i][1].trim(), 1);
+							if(arquivo==null) {
+								data[i][2] = "NOT OK";
+							} else {
+								data[i][2] = "OK";
+							}
+							if(!arq.checaIntegridade(data[i][1].trim(), arquivo)) {
+								data[i][3]= "NOT OK";
+							} else {
+								data[i][3]= "OK";
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+				}
+				table = new JTable(data, columns);
+				TableColumn columnA = table.getColumn("NOME");
+				columnA.setMinWidth(255);
+				columnA.setMaxWidth(255);
+				TableColumn columnB = table.getColumn("NOME ENCRIPTADO");
+				columnB.setMinWidth(255);
+				columnB.setMaxWidth(255);
+				TableColumn columnC = table.getColumn("INTEGRIDADE");
+				columnC.setMinWidth(70);
+				columnC.setMaxWidth(70);
+				TableColumn columnD = table.getColumn("AUTENTICIDADE");
+				columnD.setMinWidth(70);
+				columnD.setMaxWidth(70);
+				table.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
+				JScrollPane scrollpane = new JScrollPane(table);
+				scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS); 
+				scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); 
+				pc.add(scrollpane, BorderLayout.CENTER);
+				table.setBounds(17, 135, 650, 270);
+				table.setVisible(true);
+				pc.setTable(table);
+				pc.add(table);
+				pc.repaint();
+				/* fim */
+			} else {
+				JOptionPane.showMessageDialog(frame, "Este diretorio não é válido!", "", JOptionPane.OK_OPTION);
+			}
 		} 
 
 	}

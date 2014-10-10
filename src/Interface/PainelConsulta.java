@@ -11,10 +11,12 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableColumn;
 
@@ -33,7 +35,9 @@ public class PainelConsulta extends JPanel {
 	ActionButton go;
 	JLabel pathArquivos;
 	JTable table;
+	JTextField path;
 	JLabel acessos;
+	ActionButton confirmar;
 
 	public PainelConsulta() throws Exception {
 
@@ -51,7 +55,7 @@ public class PainelConsulta extends JPanel {
 
 		Arquivos arq = new Arquivos();
 		Font font = new Font("Helvetica", Font.BOLD,14);
-		
+
 		acessos = new JLabel(fp.user.getAcessos().toString());
 		acessos.setFont(font);
 		acessos.setForeground(Color.WHITE);
@@ -60,12 +64,26 @@ public class PainelConsulta extends JPanel {
 		this.add(acessos);
 
 
-		pathArquivos = new JLabel(arq.getCaminhoPasta());
-		pathArquivos.setFont(font);
-		pathArquivos.setForeground(Color.WHITE);
-		pathArquivos.setBounds(310, 105, 355, 32);
-		pathArquivos.setVisible(true);
-		this.add(pathArquivos);
+		//		pathArquivos = new JLabel(arq.getCaminhoPasta());
+		//		pathArquivos.setFont(font);
+		//		pathArquivos.setForeground(Color.WHITE);
+		//		pathArquivos.setBounds(310, 100, 150, 32);
+		//		pathArquivos.setVisible(true);
+		//		this.add(pathArquivos);
+
+		path = new JTextField();
+		path.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		path.setFont(font);
+		path.setBounds(310, 98, 220, 32);
+		path.setVisible(true);
+		this.add(path);
+
+		JButton confirmaPath = new JButton("Confirmar");
+		confirmaPath.setBounds(550, 98, 100, 32);
+		confirmaPath.setName("Caminho");
+		confirmaPath.addMouseListener(tb);
+		confirmaPath.setVisible(true);
+		this.add(confirmaPath);
 
 		ActionButton voltar = new ActionButton("imagens/botoes/voltar.png");
 		voltar.setName("VoltarConsulta");
@@ -76,61 +94,13 @@ public class PainelConsulta extends JPanel {
 
 		// Confirmar
 
-		ActionButton confirmar = new ActionButton("imagens/botoes/decriptar.png");
+		confirmar = new ActionButton("imagens/botoes/decriptar.png");
 		confirmar.setName("Decriptar");
+		confirmar.setEnabled(false);
 		confirmar.setBounds(376, 420, 182, 56);
 		confirmar.setVisible(true);
 		this.add(confirmar);
 		confirmar.addMouseListener(tb);
-
-		String[] columns = { "NOME", "NOME ENCRIPTADO", "INTEGRIDADE", "AUTENTICIDADE" };
-		String[][] data= new String[100][100];
-		List<String> fileList = arq.ReadFileAsList("index");
-		for (int i=0; i<fileList.size(); i++) {
-			if(fileList.get(i).length()>1) {
-				data[i][0] = fileList.get(i).substring(0, fileList.get(i).indexOf(" "));
-				data[i][1] = fileList.get(i).substring(fileList.get(i).indexOf(" "), fileList.get(i).length());
-				try {
-					String extensao = data[i][0].substring(data[i][0].indexOf("."), data[i][0].length());
-					byte[] arquivo = arq.decriptaArquivo(data[i][1].trim(), extensao, data[i][1].trim(), 1);
-					if(arquivo==null) {
-						data[i][2] = "NOT OK";
-					} else {
-						data[i][2] = "OK";
-					}
-					if(!arq.checaIntegridade(data[i][1].trim(), arquivo)) {
-						data[i][3]= "NOT OK";
-					} else {
-						data[i][3]= "OK";
-					}
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		
-			}
-		}
-		table = new JTable(data, columns);
-		TableColumn columnA = table.getColumn("NOME");
-        columnA.setMinWidth(255);
-        columnA.setMaxWidth(255);
-        TableColumn columnB = table.getColumn("NOME ENCRIPTADO");
-        columnB.setMinWidth(255);
-        columnB.setMaxWidth(255);
-        TableColumn columnC = table.getColumn("INTEGRIDADE");
-        columnC.setMinWidth(70);
-        columnC.setMaxWidth(70);
-        TableColumn columnD = table.getColumn("AUTENTICIDADE");
-        columnD.setMinWidth(70);
-        columnD.setMaxWidth(70);
-		table.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
-		JScrollPane scrollpane = new JScrollPane(table);
-		scrollpane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS); 
-		scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); 
-		this.add(scrollpane, BorderLayout.CENTER);
-		table.setBounds(17, 135, 650, 270);
-		table.setVisible(true);
-		this.add(table);
 
 		this.setLayout(null);
 		Dimension size = new Dimension(i.getWidth(null), i.getHeight(null));
@@ -149,4 +119,25 @@ public class PainelConsulta extends JPanel {
 	public JTable getTable() {
 		return table;
 	}
+
+	public JTextField getPath() {
+		return path;
+	}
+
+	public void setPath(JTextField path) {
+		this.path = path;
+	}
+
+	public ActionButton getConfirmar() {
+		return confirmar;
+	}
+
+	public void setConfirmar(ActionButton confirmar) {
+		this.confirmar = confirmar;
+	}
+
+	public void setTable(JTable table) {
+		this.table = table;
+	}
+
 }
