@@ -226,11 +226,12 @@ public class TratadorBotoes implements MouseListener {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
+						JOptionPane.showMessageDialog(frame, "Arquivo corrompido!", "", JOptionPane.OK_OPTION);
 					}
 
 				}
 			} else {
-				JOptionPane.showMessageDialog(frame, "Caminho de diretório não existe!", "", JOptionPane.OK_OPTION);
+				JOptionPane.showMessageDialog(frame, "O arquivo não pôde ser aberto!", "", JOptionPane.OK_OPTION);
 			}
 		}
 

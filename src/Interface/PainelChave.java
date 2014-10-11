@@ -55,6 +55,7 @@ public class PainelChave extends JPanel {
 		
 		passphrase = new JTextField();
 		passphrase.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		passphrase.setForeground(Color.WHITE);
 		passphrase.setFont(font);
 		passphrase.setHorizontalAlignment(SwingConstants.CENTER);
 		passphrase.setBounds(163, 364, 355, 32);
